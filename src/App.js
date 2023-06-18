@@ -5,9 +5,7 @@ import Login from "./pages/auth/login/Login";
 import Products from "./pages/products/Products";
 import Register from "./pages/auth/register/Register";
 import { useEffect, useState } from "react";
-import store from "./REDUX/store";
 // import { loadUser } from "./actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
 
 import Dashboard from "./pages/admin/dashboard/Dashboard";
 import NewProduct from "./pages/admin/newProduct/NewProduct";

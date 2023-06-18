@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from "react";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 // import { getAdminProducts } from "../../actions/productAction";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/header/Navbar";
@@ -12,7 +11,6 @@ import Fashion from "./fashion/Fashion";
 
 const Home = () => {
   const alert = useAlert();
-  const dispatch = useDispatch();
   // const { loading, error, products } = useSelector((state) => state.products);
   let loading = false;
   let error = false;
@@ -26,7 +24,7 @@ const Home = () => {
     if (error) {
       return alert.error(error);
     }
-  }, [dispatch, alert, error]);
+  }, [alert, error]);
   return (
     <Fragment>
       <MetaData title={"Home"} />

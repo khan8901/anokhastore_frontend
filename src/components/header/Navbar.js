@@ -7,7 +7,6 @@ import {
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { motion } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "react-bootstrap";
 
 import "./Navbar.scss";
@@ -45,7 +44,6 @@ const Navbar = () => {
   };
 
   const alert = useAlert();
-  const dispatch = useDispatch();
 
   // const logoutHandler = () => {
   //   dispatch(logout());

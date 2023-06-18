@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Footer from "../../../components/footer/Footer";
@@ -9,14 +8,13 @@ import Navbar from "../../../components/header/Navbar";
 import ButtonLoader from "../../../components/loader/ButtonLoader";
 import MetaData from "../../../components/MetaData";
 import styles from "./Register.module.scss";
-import { registerUser } from "../../../REDUX/slices/RegSlice";
 const Register = ({ history }) => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const { name, email, password } = user;
 
   const [avatar, setAvatar] = useState("");
@@ -25,28 +23,10 @@ const Register = ({ history }) => {
   );
 
   const alert = useAlert();
-  const dispatch = useDispatch();
-
-  const { isAuthenticated, loading, error } = useSelector(
-    (state) => state.register
-  );
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      history.push("/");
-    }
-    if (error) {
-      alert.error(error);
-
-      // dispatch(clearErrors());
-    }
-  }, [dispatch, alert, isAuthenticated, error, history]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(user, " this is user ");
 
-    await dispatch(registerUser(user));
     // console.log("Registration Successful.");
   };
 

@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import store from "./REDUX/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { positions, transitions, Provider as AlertProvider } from "react-alert";
@@ -17,11 +15,9 @@ const options = {
 };
 
 ReactDOM.render(
-  <Provider store={store}>
-    <AlertProvider template={AlertTemplate} {...options}>
-      <App />
-    </AlertProvider>
-  </Provider>,
+  <AlertProvider template={AlertTemplate} {...options}>
+    <App />
+  </AlertProvider>,
   document.getElementById("root")
 );
 

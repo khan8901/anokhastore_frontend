@@ -3,7 +3,6 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import { clearErrors, login } from "../../../actions/userActions";
-import { loginUser } from "../../../REDUX/slices/loginSlice";
 import Footer from "../../../components/footer/Footer";
 import Navbar from "../../../components/header/Navbar";
 import ButtonLoader from "../../../components/loader/ButtonLoader";
@@ -38,7 +37,6 @@ const Login = ({ history, location }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(loginUser(email, password));
   };
   return (
     <Fragment>

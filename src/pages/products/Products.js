@@ -37,26 +37,31 @@ const Products = ({ match }) => {
   ];
 
   const alert = useAlert();
-  const dispatch = useDispatch();
 
-  const {
-    loading,
-    products,
-    error,
-    productsCount,
-    resPerPage,
-    filteredProductsCount,
-  } = useSelector((state) => state.products);
+  // const {
+  //   loading,
+  //   products,
+  //   error,
+  //   productsCount,
+  //   resPerPage,
+  //   filteredProductsCount,
+  // } = useSelector((state) => state.products);
+  const loading = false;
+  const products = [];
+  const error = false;
+  const productsCount = 10;
+  const resPerPage = 10;
+  const filteredProductsCount = 10;
 
   const keyword = match.params.keyword;
 
-  useEffect(() => {
-    if (error) {
-      return alert.error(error);
-    }
+  // useEffect(() => {
+  //   if (error) {
+  //     return alert.error(error);
+  //   }
 
-    // dispatch(getProducts(keyword, currentPage, price, category, rating));
-  }, [dispatch, alert, error, keyword, currentPage, price, category, rating]);
+  //   // dispatch(getProducts(keyword, currentPage, price, category, rating));
+  // }, [dispatch, alert, error, keyword, currentPage, price, category, rating]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
