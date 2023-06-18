@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 // import {
 //     clearErrors,
 //     loadUser,
@@ -25,35 +24,14 @@ const UpdateProfile = ({ history }) => {
   );
 
   const alert = useAlert();
-  const dispatch = useDispatch();
-
-  const { user } = useSelector((state) => state.auth);
-  const { error, isUpdated, loading } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (user) {
-      setName(user.name);
-      setAddress(user.address);
-      setPhone(user.phone);
-      setAvatarPreview(user.avatar.url);
-    }
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-
-    if (isUpdated) {
-      alert.success("User updated successfully");
-      // dispatch(loadUser());
-
-      history.push("/me");
-
-      dispatch({
-        type: UPDATE_PROFILE_RESET,
-      });
-    }
-  }, [dispatch, user, alert, error, history, isUpdated]);
+  const user = {
+    name: "Ahmad",
+    email: "ahmad@gmail.com",
+    phone: "03120073542",
+    address: "house No 1",
+    role: "admin",
+  };
+  const loading = false;
 
   const submitHandler = (e) => {
     e.preventDefault();

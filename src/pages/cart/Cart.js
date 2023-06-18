@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import cartItems from "../../db/cartDB";
 // import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
 import styles from "./Cart.module.scss";
@@ -10,10 +10,7 @@ import Footer from "../../components/footer/Footer";
 import MetaData from "../../components/MetaData";
 
 const Cart = ({ history }) => {
-  const dispatch = useDispatch();
   const alert = useAlert();
-
-  const { cartItems } = useSelector((state) => state.cart);
 
   const removeCartItemHandler = (id) => {
     // dispatch(removeItemFromCart(id));
@@ -61,7 +58,7 @@ const Cart = ({ history }) => {
                         <div className={`row ${styles.item_info}`}>
                           <div className="col-4 col-lg-2">
                             <img
-                              src={item.image}
+                              src={item.images[0].url}
                               alt="Laptop"
                               height="80"
                               width="105"
