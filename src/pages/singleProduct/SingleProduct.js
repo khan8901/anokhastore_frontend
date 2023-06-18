@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 import Rating from "@mui/material/Rating";
 import { useParams } from "react-router-dom";
+import products from "../../db/productsDB";
 // import {
 //     clearErrors,
 //     getProductDetails,
@@ -16,7 +16,6 @@ import {
 } from "react-icons/ai";
 import styles from "./SingleProduct.module.scss";
 // import { addItemToCart } from "../../actions/cartActions";
-import { NEW_REVIEW_RESET } from "../../constants/productsConstants";
 import ListReview from "../reviews/ListReview";
 import Navbar from "../../components/header/Navbar";
 import Footer from "../../components/footer/Footer";
@@ -24,6 +23,7 @@ import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import MetaData from "../../components/MetaData";
 
 const SingleProduct = ({ match }) => {
+  console.log("Single product is called", match.params.id);
   const [quantity, setQuantity] = useState(1);
   const [preview, setPreview] = useState(0);
   const [rating, setRating] = useState(0);
@@ -33,7 +33,6 @@ const SingleProduct = ({ match }) => {
 
   const scrollRef = React.useRef(null);
 
-  const dispatch = useDispatch();
   const alert = useAlert();
 
   let { id } = useParams();
@@ -48,14 +47,15 @@ const SingleProduct = ({ match }) => {
       current.scrollLeft += 300;
     }
   };
+  const loading = false;
+  const error = false;
+  const productFiltered = products.filter((x) => x._id === id);
+  const product = productFiltered[0];
 
-  const { loading, error, product } = useSelector(
-    (state) => state.productDetails
-  );
-  const { user } = useSelector((state) => state.auth);
-  const { error: reviewError, success } = useSelector(
-    (state) => state.newReview
-  );
+  console.log("This is the filtered product", product);
+  const user = {
+    name: "Ahmad",
+  };
 
   const increaseQty = () => {
     const count = document.querySelector(".count");
@@ -74,25 +74,6 @@ const SingleProduct = ({ match }) => {
     const qty = count.valueAsNumber - 1;
     setQuantity(qty);
   };
-
-  useEffect(() => {
-    // dispatch(getProductDetails(id));
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-
-    if (reviewError) {
-      alert.error(reviewError);
-      // dispatch(clearErrors());
-    }
-
-    if (success) {
-      alert.success("Reivew posted successfully");
-      // dispatch({ type: NEW_REVIEW_RESET });
-    }
-  }, [dispatch, alert, id, error, reviewError, success]);
 
   const addToCart = () => {
     // dispatch(addItemToCart(id, quantity));
@@ -139,7 +120,7 @@ const SingleProduct = ({ match }) => {
                           ref={scrollRef}
                         >
                           {product?.images.map((image, index) => (
-                            <div key={image._id}>
+                            <div key={index}>
                               <div className={styles.item}>
                                 <img
                                   src={image.url}
