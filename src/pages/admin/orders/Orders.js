@@ -6,7 +6,6 @@ import React, { useEffect } from "react";
 // } from "../../../actions/orderActions";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./Orders.module.scss";
 import Loader from "../../../components/loader/Loader";
 import { Table } from "react-bootstrap";
@@ -15,13 +14,15 @@ import { Link } from "react-router-dom";
 import { DELETE_ORDER_RESET } from "../../../constants/orderConstants";
 import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
+import orders from "../../../db/ordersDB";
 
 const Orders = ({ history }) => {
   const alert = useAlert();
-  const dispatch = useDispatch();
+  console.log("Orders is called.");
 
-  const { loading, error, orders } = useSelector((state) => state.allOrders);
-  const { isDeleted } = useSelector((state) => state.order);
+  const isDeleted = false;
+  const loading = false;
+  const error = false;
 
   useEffect(() => {
     // dispatch(allOrders());
@@ -34,9 +35,8 @@ const Orders = ({ history }) => {
     if (isDeleted) {
       alert.success("Order deleted successfully");
       history.push("/admin/orders");
-      // dispatch({ type: DELETE_ORDER_RESET });
     }
-  }, [dispatch, alert, error, isDeleted, history]);
+  }, []);
 
   const deleteOrderHandler = (id) => {
     // dispatch(deleteOrder(id));

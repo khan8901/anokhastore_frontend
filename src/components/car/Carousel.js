@@ -58,7 +58,7 @@ const Carousel = () => {
   useEffect(() => {
     setInterval(() => {
       handleNext();
-    }, 10000);
+    }, 100000);
   }, []);
 
   const handlePrev = () => {

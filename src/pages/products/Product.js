@@ -2,14 +2,13 @@ import React from "react";
 import { useAlert } from "react-alert";
 import { AiFillStar, AiOutlineEye } from "react-icons/ai";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 // import { addItemToCart } from "../../actions/cartActions";
 
 import styles from "./Products.module.scss";
 
 const Product = ({ product }) => {
-  const dispatch = useDispatch();
+  console.log("product is called");
   const alert = useAlert();
 
   const addToCart = () => {

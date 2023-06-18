@@ -55,7 +55,8 @@ function App() {
         <Route path="/product/:id" component={SingleProduct} exact />
         <Route path="/cart" component={Cart} exact />
 
-        <ProtectedRoute path="/me" component={Profile} exact />
+        <Route path="/me" component={Profile} exact />
+        {/* <ProtectedRoute path="/me" component={Profile} exact /> */}
         <ProtectedRoute path="/me/update" component={UpdateProfile} exact />
         <ProtectedRoute path="/me/password" component={ChangePassword} exact />
         <ProtectedRoute path="/orders/me" component={MyOrders} exact />
@@ -69,28 +70,29 @@ function App() {
           </Elements>
         )} */}
         <ProtectedRoute path="/success" component={Success} />
-        <ProtectedRoute
+        {/* <ProtectedRoute
           path="/admin"
-          isAdmin={true}
+          // isAdmin={true}
           component={Dashboard}
           exact
-        />
+        /> */}
+        <Route path="/admin" component={Dashboard} />
         <ProtectedRoute
           path="/admin/products/new"
           isAdmin={true}
           component={NewProduct}
           exact
         />
-        <ProtectedRoute
+        <Route
           path="/admin/products"
           isAdmin={true}
           component={ProductsList}
           exact
         />
-        <ProtectedRoute
+        <Route
           path="/admin/product/details/:id"
           component={ProductDetails}
-          exact
+          // exact
         />
         <ProtectedRoute
           path="/admin/product/:id"
@@ -98,11 +100,11 @@ function App() {
           component={UpdateProduct}
           exact
         />
-        <ProtectedRoute
+        <Route
           path="/admin/users"
           isAdmin={true}
           component={Users}
-          exact
+          // exact
         />
         <ProtectedRoute
           path="/admin/user/details/:id"
@@ -110,11 +112,11 @@ function App() {
           component={UserDetails}
           exact
         />
-        <ProtectedRoute
+        <Route
           path="/admin/orders"
           isAdmin={true}
           component={Orders}
-          exact
+          // exact
         />
         <ProtectedRoute
           path="/admin/order/:id"

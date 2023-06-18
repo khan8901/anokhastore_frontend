@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import { clearErrors, login } from "../../../actions/userActions";
 import Footer from "../../../components/footer/Footer";
@@ -14,11 +13,10 @@ const Login = ({ history, location }) => {
   const [password, setPassword] = useState("");
 
   const alert = useAlert();
-  const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.loginreducer
-  );
+  const isAuthenticated = true;
+  const error = false;
+  const loading = false;
 
   console.log(isAuthenticated, error, loading);
 
@@ -31,9 +29,8 @@ const Login = ({ history, location }) => {
 
     if (error) {
       alert.error(error);
-      // dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, history, redirect]);
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();

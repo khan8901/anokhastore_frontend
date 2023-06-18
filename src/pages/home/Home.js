@@ -12,56 +12,13 @@ import MetaData from "../../components/MetaData";
 import Banner from "./banner/Banner";
 import Category from "./category/Category";
 import Carousel from "../../components/car/Carousel";
+import products from "../../db/productsDB";
 
 const Home = () => {
   const alert = useAlert();
   // const { loading, error, products } = useSelector((state) => state.products);
   let loading = false;
   let error = false;
-  let products = [
-    {
-      _id: 1,
-      name: "Airpods Wireless Bluetooth Headphone.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD5_ZU2n-vbqrdNVN-IMSdEQTSiobtpmW6owrkDRraZytESTulFw-2yaC5t3rzu2pTchs&usqp=CAU",
-      price: "14,999",
-    },
-    {
-      _id: 2,
-      name: "Airpods Wireless Bluetooth Headphone.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD5_ZU2n-vbqrdNVN-IMSdEQTSiobtpmW6owrkDRraZytESTulFw-2yaC5t3rzu2pTchs&usqp=CAU",
-      price: "15,999",
-    },
-    {
-      _id: 3,
-      name: "Airpods Wireless Bluetooth Headphone.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD5_ZU2n-vbqrdNVN-IMSdEQTSiobtpmW6owrkDRraZytESTulFw-2yaC5t3rzu2pTchs&usqp=CAU",
-      price: "15,999",
-    },
-    {
-      _id: 4,
-      name: "Airpods Wireless Bluetooth Headphone.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD5_ZU2n-vbqrdNVN-IMSdEQTSiobtpmW6owrkDRraZytESTulFw-2yaC5t3rzu2pTchs&usqp=CAU",
-      price: "15,999",
-    },
-    {
-      _id: 5,
-      name: "Airpods Wireless Bluetooth Headphone.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD5_ZU2n-vbqrdNVN-IMSdEQTSiobtpmW6owrkDRraZytESTulFw-2yaC5t3rzu2pTchs&usqp=CAU",
-      price: "15,999",
-    },
-    {
-      _id: 6,
-      name: "Airpods Wireless Bluetooth Headphone.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD5_ZU2n-vbqrdNVN-IMSdEQTSiobtpmW6owrkDRraZytESTulFw-2yaC5t3rzu2pTchs&usqp=CAU",
-      price: "15,999",
-    },
-  ];
 
   // filter products by types
 

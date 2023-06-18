@@ -9,27 +9,17 @@ import { useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
+import products from "../../../db/productsDB";
 
 const ProductDetails = () => {
   const [preview, setPreview] = useState(0);
 
-  const dispatch = useDispatch();
-  const alert = useAlert();
-
   let { id } = useParams();
+  console.log(id);
 
-  const { loading, error, product } = useSelector(
-    (state) => state.productDetails
-  );
+  const loading = false;
+  const product = products.filter((x) => products._id === id);
 
-  useEffect(() => {
-    // dispatch(getProductDetails(id));
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-  }, [dispatch, alert, error, id]);
   return (
     <div className={styles.product_details}>
       <MetaData title={"Product Details"} />

@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { Table } from "react-bootstrap";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import users from "../../../db/usersDB";
 // import {
 //     allUsers,
 //     clearErrors,
@@ -11,32 +11,15 @@ import { Link } from "react-router-dom";
 // } from "../../../actions/userActions";
 import Loader from "../../../components/loader/Loader";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
-import { DELETE_USER_RESET } from "../../../constants/userConstants";
 import styles from "./Users.module.scss";
 import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
 
 const Users = ({ history }) => {
+  console.log("These are the users: ", users);
   const alert = useAlert();
-  const dispatch = useDispatch();
 
-  const { loading, error, users } = useSelector((state) => state.allUsers);
-  const { isDeleted } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    // dispatch(allUsers());
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-
-    if (isDeleted) {
-      alert.success("User deleted successfully");
-      history.push("/admin/users");
-      // dispatch({ type: DELETE_USER_RESET });
-    }
-  }, [dispatch, alert, error, isDeleted, history]);
+  const loading = false;
 
   const deleteUserHandler = (id) => {
     // dispatch(deleteUser(id));
@@ -45,11 +28,9 @@ const Users = ({ history }) => {
     <div className={styles.users}>
       <MetaData title={"All Users"} />
       <div className="row g-0">
-        <div className="col-md-2">
-          <Sidebar />
-        </div>
+        <div className="col-md-2">{/* <Sidebar /> */}</div>
         <div className="col-md-10">
-          <Navbar />
+          {/* <Navbar /> */}
           <div className={`${styles.table} container mt-3`}>
             {loading ? (
               <>

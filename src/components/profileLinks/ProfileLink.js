@@ -10,10 +10,12 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { useAlert } from "react-alert";
 
 const ProfileLink = () => {
-  const { user, loading } = useSelector((state) => state.auth);
-
+  const loading = false;
+  const user = {
+    name: "Ahmad",
+    email: "ahmad@gmail.com",
+  };
   const alert = useAlert();
-  const dispatch = useDispatch();
 
   const logoutHandler = () => {
     // dispatch(logout());

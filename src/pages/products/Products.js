@@ -1,7 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
-// import { getProducts } from "../../actions/productAction";
 import Product from "./Product";
 import { Spinner } from "react-bootstrap";
 import { BsFilter } from "react-icons/bs";
@@ -13,6 +11,7 @@ import "rc-slider/assets/index.css";
 import Navbar from "../../components/header/Navbar";
 import Footer from "../../components/footer/Footer";
 import MetaData from "../../components/MetaData";
+import products from "../../db/productsDB";
 
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -36,8 +35,6 @@ const Products = ({ match }) => {
     "Other",
   ];
 
-  const alert = useAlert();
-
   // const {
   //   loading,
   //   products,
@@ -47,7 +44,6 @@ const Products = ({ match }) => {
   //   filteredProductsCount,
   // } = useSelector((state) => state.products);
   const loading = false;
-  const products = [];
   const error = false;
   const productsCount = 10;
   const resPerPage = 10;

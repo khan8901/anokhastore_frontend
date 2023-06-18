@@ -4,30 +4,15 @@ import Sidebar from "../../../components/admin/sidebar/Sidebar";
 import Widget from "../../../components/widget/Widget";
 import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./Dashboard.module.scss";
 import Loader from "../../../components/loader/Loader";
-// import { getAdminProducts } from "../../../actions/productAction";
-// import { allUsers } from "../../../actions/userActions";
-// import { allOrders } from "../../../actions/orderActions";
+import users from "../../../db/usersDB";
 import MetaData from "../../../components/MetaData";
+import orders from "../../../db/ordersDB";
+import products from "../../../db/productsDB";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-
-  const { orders } = useSelector((state) => state.allOrders);
-  const { users } = useSelector((state) => state.allUsers);
-  const { loading, products } = useSelector((state) => state.products);
-
-  useEffect(() => {
-    // dispatch(getAdminProducts());
-  }, [dispatch]);
-  useEffect(() => {
-    // dispatch(allOrders());
-  }, [dispatch]);
-  useEffect(() => {
-    // dispatch(allUsers());
-  }, [dispatch]);
+  const loading = false;
 
   let stockout = products?.filter((item) => item.stock === 0);
 

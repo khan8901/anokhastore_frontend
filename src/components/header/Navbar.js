@@ -18,7 +18,7 @@ import Search from "./Search";
 import Links from "../Links/Links";
 
 const Navbar = () => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [dropdown, setDropdown] = useState(false);
   // const { user, loading } = useSelector((state) => state.auth);
   // const { cartItems } = useSelector((state) => state.cart);
@@ -26,8 +26,8 @@ const Navbar = () => {
     avatar: {
       url: "https://media.licdn.com/dms/image/D4D03AQFpOs5DEsngcQ/profile-displayphoto-shrink_800_800/0/1678377600849?e=2147483647&v=beta&t=5hC6AJfPJGdyR3df-fqKOmmXP0aU1R8z9-AWQa_Qfng",
     },
-    name: "Ahmad",
-    role: "Admin",
+    name: "Ali",
+    role: "admin",
   };
   let loading = false;
   let cartItems = [];
@@ -141,7 +141,7 @@ const Navbar = () => {
                             </>
                           )}
                           <Link
-                            to="/profile"
+                            to="/login"
                             id="logout"
                             // onClick={logoutHandler}
                           >

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
 import { Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./ProductsList.module.scss";
 // import {
@@ -17,34 +16,13 @@ import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
 import { DELETE_PRODUCT_RESET } from "../../../constants/productsConstants";
 import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
+import products from "../../../db/productsDB";
 const ProductsList = ({ history }) => {
   const alert = useAlert();
-  const dispatch = useDispatch();
 
-  const { loading, error, products } = useSelector((state) => state.products);
-  const { error: deleteError, isDeleted } = useSelector(
-    (state) => state.product
-  );
-
-  useEffect(() => {
-    // dispatch(getAdminProducts());
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-
-    if (deleteError) {
-      alert.error(deleteError);
-      // dispatch(clearErrors());
-    }
-
-    if (isDeleted) {
-      alert.success("Product deleted successfully");
-      history.push("/admin/products");
-      // dispatch({ type: DELETE_PRODUCT_RESET });
-    }
-  }, [dispatch, alert, error, deleteError, isDeleted, history]);
+  const loading = false;
+  const error = false;
+  const isDeleted = false;
 
   const deleteProductHandler = (id) => {
     // dispatch(deleteProduct(id));
