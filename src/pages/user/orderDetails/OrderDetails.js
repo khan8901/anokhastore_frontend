@@ -1,11 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import ProfileLink from "../../../components/profileLinks/ProfileLink";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 import { FcInTransit, FcPaid, FcProcess, FcShipped } from "react-icons/fc";
 
 import styles from "./OrderDetails.module.scss";
-// import { clearErrors, getOrderDetails } from "../../../actions/orderActions";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { BsEmojiSmile, BsPhone } from "react-icons/bs";
@@ -21,23 +19,45 @@ import MetaData from "../../../components/MetaData";
 
 const OrderDetails = ({ match }) => {
   const alert = useAlert();
-  const dispatch = useDispatch();
+  const loading = false;
 
-  const {
-    loading,
-    error,
-    order = {},
-  } = useSelector((state) => state.orderDetails);
-
-  // condition for animation
+  const order = {
+    shippingInfo: {
+      phoneNo: 1234,
+      address: "Awan town",
+      city: "Lahore",
+    },
+    orderItems: [
+      {
+        product: "Tablet",
+        image:
+          "https://images.unsplash.com/photo-1606041011872-596597976b25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjBpcGhvbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+        name: "Apple",
+        price: 1000,
+        quantity: 5,
+      },
+      {
+        product: "Phone",
+        image:
+          "https://images.unsplash.com/photo-1603791239531-1dda55e194a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXBwbGUlMjBpcGhvbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+        name: "Apple",
+        price: 1000,
+        quantity: 5,
+      },
+    ],
+    paymentInfo: { id: 1234321 },
+    user: { name: "Ahmad" },
+    totalPrice: 5000,
+    status: "Processing",
+  };
 
   let status;
 
-  if (order.orderStatus === "Processing") {
+  if (order.status === "Processing") {
     status = 0;
-  } else if (order.orderStatus === "On The Way") {
+  } else if (order.status === "On The Way") {
     status = 1;
-  } else if (order.orderStatus === "Shipped") {
+  } else if (order.status === "Shipped") {
     status = 2;
   } else {
     status = 3;
@@ -51,17 +71,9 @@ const OrderDetails = ({ match }) => {
 
   const { shippingInfo, orderItems, paymentInfo, user, totalPrice } = order;
 
-  useEffect(() => {
-    // dispatch(getOrderDetails(match.params.id));
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-  }, [dispatch, alert, error, match.params.id]);
-
   const isPaid =
     paymentInfo && paymentInfo.status === "succeeded" ? true : false;
+
   return (
     <Fragment>
       <MetaData title={"Order Details"} />

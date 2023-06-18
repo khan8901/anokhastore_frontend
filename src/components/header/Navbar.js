@@ -26,7 +26,7 @@ const Navbar = () => {
       url: "https://media.licdn.com/dms/image/D4D03AQFpOs5DEsngcQ/profile-displayphoto-shrink_800_800/0/1678377600849?e=2147483647&v=beta&t=5hC6AJfPJGdyR3df-fqKOmmXP0aU1R8z9-AWQa_Qfng",
     },
     name: "Ali",
-    role: "admin",
+    role: "user",
   };
   let loading = false;
   let cartItems = [];

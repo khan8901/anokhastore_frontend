@@ -13,18 +13,35 @@ import MetaData from "../../../components/MetaData";
 
 const MyOrders = () => {
   const alert = useAlert();
-  const dispatch = useDispatch();
 
-  const { loading, error, orders } = useSelector((state) => state.myOrders);
+  const loading = false;
+  const orders = [
+    {
+      _id: "1",
+      orderItems: [{}, {}],
+      totalPrice: 1500,
+      orderStatus: "Delivered",
+    },
+    {
+      _id: "2",
+      orderItems: [{}, {}],
+      totalPrice: 2000,
+      orderStatus: "Shipped",
+    },
+    {
+      _id: "3",
+      orderItems: [{}, {}],
+      totalPrice: 2500,
+      orderStatus: "On The Way",
+    },
+    {
+      _id: "4",
+      orderItems: [{}, {}],
+      totalPrice: 3000,
+      orderStatus: "Processing",
+    },
+  ];
 
-  useEffect(() => {
-    // dispatch(myOrders());
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-  }, [dispatch, alert, error]);
   return (
     <Fragment>
       <MetaData title={"My Order"} />
@@ -49,20 +66,20 @@ const MyOrders = () => {
                           </>
                         ) : (
                           <>
-                            {/* <div className="d-flex align-items-center justify-content-between mb-2 ps-2 pe-2 pt-2">
-                                                <h5>
-                                                    Total Orders :
-                                                    <span className="ms-2 text-success">
-                                                        {orders.length}
-                                                    </span>
-                                                </h5>
-                                                <h5>
-                                                    Total Spend :
-                                                    <span className="ms-2 text-success">
-                                                        {orders.length}
-                                                    </span>
-                                                </h5>
-                                            </div> */}
+                            <div className="d-flex align-items-center justify-content-between mb-2 ps-2 pe-2 pt-2">
+                              <h5>
+                                Total Orders :
+                                <span className="ms-2 text-success">
+                                  {orders.length}
+                                </span>
+                              </h5>
+                              <h5>
+                                Total Spend :
+                                <span className="ms-2 text-success">
+                                  {orders.length}
+                                </span>
+                              </h5>
+                            </div>
                             <div>
                               <div className="row">
                                 <div className="col-md-4">
@@ -84,7 +101,7 @@ const MyOrders = () => {
                             </div>
                             <hr className="text-primary" />
                             {orders.map((order) => (
-                              <div>
+                              <div key={order?._id}>
                                 <div className="row">
                                   <div className="col-md-4">
                                     <p>{order?._id}</p>

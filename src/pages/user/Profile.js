@@ -18,7 +18,7 @@ const Profile = () => {
     email: "ahmad@gmail.com",
     phone: "03120073542",
     address: "house No 1",
-    role: "admin",
+    role: "user",
   };
   return (
     <Fragment>
