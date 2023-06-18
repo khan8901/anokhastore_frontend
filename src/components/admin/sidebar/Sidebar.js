@@ -9,7 +9,6 @@ import { HiTemplate } from "react-icons/hi";
 import { AiFillStar, AiOutlineHome } from "react-icons/ai";
 
 const Sidebar = () => {
-  console.log("sidebar is called.");
   return (
     <div className={styles.sidebar}>
       <img

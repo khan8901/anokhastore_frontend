@@ -5,7 +5,6 @@ import { Card } from "react-bootstrap";
 import "./product.css";
 
 const Product = ({ product }) => {
-  console.log("product is called");
   return (
     <Card className="mt-3 p-0">
       <Link to={`/product/${product._id}`}>

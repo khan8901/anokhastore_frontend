@@ -11,15 +11,18 @@ import MetaData from "../../../components/MetaData";
 const Shipping = ({ history }) => {
   const countriesList = Object.values(countries);
 
-  const { shippingInfo } = useSelector((state) => state.cart);
-
+  const shippingInfo = {
+    address: "House No 1",
+    city: "Lahore",
+    postalCode: 123,
+    phoneNo: 12344556,
+    country: "Pakistan",
+  };
   const [address, setAddress] = useState(shippingInfo.address);
   const [city, setCity] = useState(shippingInfo.city);
   const [postalCode, setPostalCode] = useState(shippingInfo.postalCode);
   const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
   const [country, setCountry] = useState(shippingInfo.country);
-
-  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();

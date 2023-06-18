@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import CheckoutSteps from "../checkoutSteps/CheckoutSteps";
 import styles from "./Payment.module.scss";
+import cartItems from "../../../db/cartDB";
 
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 
 import {
   useStripe,
@@ -34,18 +34,20 @@ const Payment = ({ history }) => {
   const alert = useAlert();
   const stripe = useStripe();
   const elements = useElements();
-  const dispatch = useDispatch();
-
-  const { user } = useSelector((state) => state.auth);
-  const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  const { error } = useSelector((state) => state.newOrder);
-
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-  }, [dispatch, alert, error]);
+  const user = {
+    name: "Ahmad",
+    email: "ahmad@gmail.com",
+    phone: "03120073542",
+    address: "house No 1",
+    role: "admin",
+  };
+  const shippingInfo = {
+    address: "House No 1",
+    city: "Lahore",
+    postalCode: 123,
+    phoneNo: 12344556,
+    country: "Pakistan",
+  };
 
   const order = {
     orderItems: cartItems,
