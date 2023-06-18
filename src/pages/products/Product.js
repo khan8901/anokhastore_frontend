@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import styles from "./Products.module.scss";
 
 const Product = ({ product }) => {
-  console.log("product is called", product);
   const alert = useAlert();
 
   const addToCart = () => {

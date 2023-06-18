@@ -184,6 +184,12 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
+                    <Link to="/cart" onClick={() => setToggle(false)}>
+                      Cart
+                    </Link>
+                  </li>
+
+                  <li>
                     <Link to="/contact" onClick={() => setToggle(false)}>
                       Contact
                     </Link>

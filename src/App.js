@@ -65,9 +65,9 @@ function App() {
         <Route path="/shipping" component={Shipping} />
         <Route path="/confirm" component={ConfirmOrder} />
         {/* {stripeApiKey && (
-          <Elements stripe={loadStripe(stripeApiKey)}>
-            <ProtectedRoute path="/payment" component={Payment} />
-          </Elements>
+          <Elements stripe={loadStripe(stripeApiKey)}> */}
+        <Route path="/payment" component={Payment} />
+        {/* </Elements>
         )} */}
         <ProtectedRoute path="/success" component={Success} />
         {/* <ProtectedRoute

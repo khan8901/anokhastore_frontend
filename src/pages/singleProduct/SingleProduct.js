@@ -23,7 +23,6 @@ import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import MetaData from "../../components/MetaData";
 
 const SingleProduct = ({ match }) => {
-  console.log("Single product is called", match.params.id);
   const [quantity, setQuantity] = useState(1);
   const [preview, setPreview] = useState(0);
   const [rating, setRating] = useState(0);
@@ -52,7 +51,6 @@ const SingleProduct = ({ match }) => {
   const productFiltered = products.filter((x) => x._id === id);
   const product = productFiltered[0];
 
-  console.log("This is the filtered product", product);
   const user = {
     name: "Ahmad",
   };

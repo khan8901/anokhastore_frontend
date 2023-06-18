@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import CheckoutSteps from "../checkoutSteps/CheckoutSteps";
 import styles from "./Payment.module.scss";
 import cartItems from "../../../db/cartDB";
