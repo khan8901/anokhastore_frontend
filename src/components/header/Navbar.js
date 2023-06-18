@@ -22,26 +22,32 @@ const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   // const { user, loading } = useSelector((state) => state.auth);
   // const { cartItems } = useSelector((state) => state.cart);
-  let user = {};
+  let user = {
+    avatar: {
+      url: "https://media.licdn.com/dms/image/D4D03AQFpOs5DEsngcQ/profile-displayphoto-shrink_800_800/0/1678377600849?e=2147483647&v=beta&t=5hC6AJfPJGdyR3df-fqKOmmXP0aU1R8z9-AWQa_Qfng",
+    },
+    name: "Ahmad",
+    role: "Admin",
+  };
   let loading = false;
   let cartItems = [];
 
   // Sticky Menu Area
-  useEffect(() => {
-    window.addEventListener("scroll", isSticky);
-    return () => {
-      window.removeEventListener("scroll", isSticky);
-    };
-  });
+  // useEffect(() => {
+  //   window.addEventListener("scroll", isSticky);
+  //   return () => {
+  //     window.removeEventListener("scroll", isSticky);
+  //   };
+  // });
 
   /* Method that will fix header after a specific scrollable */
-  const isSticky = (e) => {
-    const header = document.querySelector(".links");
-    const scrollTop = window.scrollY;
-    scrollTop >= 150
-      ? header.classList.add("is-sticky")
-      : header.classList.remove("is-sticky");
-  };
+  // const isSticky = (e) => {
+  //   const header = document.querySelector(".links");
+  //   const scrollTop = window.scrollY;
+  //   scrollTop >= 150
+  //     ? header.classList.add("is-sticky")
+  //     : header.classList.remove("is-sticky");
+  // };
 
   const alert = useAlert();
 
@@ -51,20 +57,21 @@ const Navbar = () => {
   // };
   return (
     <div className="nav_container">
-      <Announcement />
+      {/* <Announcement /> */}
       <nav className="navbar">
         <div className="container">
-          <div className="d-flex align-items-center">
-            <img
-              style={{ height: "50px" }}
-              src="https://res.cloudinary.com/mehedi08h/image/upload/v1648446111/shopx/logo2_diozsh.png"
-              alt=""
-            />
-          </div>
-          <div className="search">
-            <Route render={({ history }) => <Search history={history} />} />
+          <div className="left-navbar">
+            <div className="d-flex align-items-center">
+              <img
+                style={{ height: "50px" }}
+                src="https://res.cloudinary.com/mehedi08h/image/upload/v1648446111/shopx/logo2_diozsh.png"
+                alt=""
+              />
+            </div>
+            <div className="search">
+              <Route render={({ history }) => <Search history={history} />} />
 
-            {/* <ul className="d-flex align-items-center">
+              {/* <ul className="d-flex align-items-center">
                             <li>
                                 <Link to="/">Home</Link>
                             </li>
@@ -74,6 +81,7 @@ const Navbar = () => {
                             <li>About</li>
                             <li>Contact</li>
                         </ul> */}
+            </div>
           </div>
           <div className="nav_links">
             <ul className="d-flex align-items-center">
@@ -190,9 +198,9 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <div className="links">
+      {/* <div className="links">
         <Links />
-      </div>
+      </div> */}
     </div>
   );
 };
