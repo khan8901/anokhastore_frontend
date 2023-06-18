@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./NewProduct.module.scss";
-// import { clearErrors, newProduct } from "../../../actions/productAction";
-import { NEW_PRODUCT_RESET } from "../../../constants/productsConstants";
 import ButtonLoader from "../../../components/loader/ButtonLoader";
 import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
@@ -37,22 +34,10 @@ const NewProduct = ({ history }) => {
   const types = ["Men", "Women", "Kids"];
 
   const alert = useAlert();
-  const dispatch = useDispatch();
 
-  const { loading, error, success } = useSelector((state) => state.newProduct);
-
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-
-    if (success) {
-      history.push("/admin/products");
-      alert.success("Product created successfully");
-      dispatch({ type: NEW_PRODUCT_RESET });
-    }
-  }, [dispatch, alert, error, success, history]);
+  const loading = false;
+  const error = false;
+  const success = true;
 
   const submitHandler = (e) => {
     e.preventDefault();

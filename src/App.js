@@ -77,7 +77,7 @@ function App() {
           exact
         /> */}
         <Route path="/admin" component={Dashboard} />
-        <ProtectedRoute
+        <Route
           path="/admin/products/new"
           isAdmin={true}
           component={NewProduct}
