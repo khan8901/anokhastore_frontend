@@ -15,7 +15,6 @@ import { useAlert } from "react-alert";
 // import { logout } from "../../actions/userActions";
 import Announcement from "../announcement/Announcement";
 import Search from "./Search";
-import Links from "../Links/Links";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(true);
@@ -62,11 +61,13 @@ const Navbar = () => {
         <div className="container">
           <div className="left-navbar">
             <div className="d-flex align-items-center">
-              <img
-                style={{ height: "50px" }}
-                src="https://res.cloudinary.com/mehedi08h/image/upload/v1648446111/shopx/logo2_diozsh.png"
-                alt=""
-              />
+              <Link to="/">
+                <img
+                  style={{ height: "50px" }}
+                  src="https://res.cloudinary.com/mehedi08h/image/upload/v1648446111/shopx/logo2_diozsh.png"
+                  alt=""
+                />
+              </Link>
             </div>
             <div className="search">
               <Route render={({ history }) => <Search history={history} />} />

@@ -11,8 +11,6 @@ import Loader from "../../../components/loader/Loader";
 import { Table } from "react-bootstrap";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { DELETE_ORDER_RESET } from "../../../constants/orderConstants";
-import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
 import orders from "../../../db/ordersDB";
 
@@ -50,7 +48,6 @@ const Orders = ({ history }) => {
           <Sidebar />
         </div>
         <div className="col-md-10">
-          <Navbar />
           <div className={`${styles.table} container mt-3`}>
             {loading ? (
               <>

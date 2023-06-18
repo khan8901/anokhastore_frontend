@@ -77,6 +77,13 @@ const NewProduct = ({ history }) => {
       reader.readAsDataURL(file);
     });
   };
+  const deleteImage = (index) => {
+    setImagesPreview((prevImagesPreview) =>
+      prevImagesPreview.filter((_, i) => i !== index)
+    );
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
   return (
     <div className={styles.new_product}>
       <MetaData title={"Add Product"} />
@@ -85,7 +92,6 @@ const NewProduct = ({ history }) => {
           <Sidebar />
         </div>
         <div className="col-md-10">
-          <Navbar />
           <div className={styles.product_input}>
             <div className={styles.form}>
               <h4>Add Product</h4>
@@ -201,15 +207,22 @@ const NewProduct = ({ history }) => {
                   </div>
 
                   <div>
-                    {imagesPreview.map((img) => (
-                      <img
-                        src={img}
-                        key={img}
-                        alt="Images Preview"
-                        className="mt-3 me-2"
-                        width="55"
-                        height="52"
-                      />
+                    {imagesPreview.map((img, index) => (
+                      <div key={img} className={styles.image_container}>
+                        <img
+                          src={img}
+                          alt="Images Preview"
+                          className="mt-3 me-2"
+                          width="85"
+                          height="80"
+                        />
+                        <button
+                          className={styles.delete_button}
+                          onClick={() => deleteImage(index)}
+                        >
+                          &#x2716; {/* Unicode for cross symbol */}
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </div>

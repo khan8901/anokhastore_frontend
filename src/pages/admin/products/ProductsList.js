@@ -35,7 +35,7 @@ const ProductsList = ({ history }) => {
           <Sidebar />
         </div>
         <div className="col-md-10">
-          <Navbar />
+          {/* <Navbar /> */}
           <div className={`${styles.table} container mt-3`}>
             <div>
               <Table responsive>

@@ -13,6 +13,7 @@ import Banner from "./banner/Banner";
 import Category from "./category/Category";
 import Carousel from "../../components/car/Carousel";
 import products from "../../db/productsDB";
+import Products from "../products/Products";
 
 const Home = () => {
   const alert = useAlert();
@@ -34,34 +35,7 @@ const Home = () => {
       <MetaData title={"Home"} />
       <Navbar />
       <Carousel />
-      {/* <Banner /> */}
-      {loading ? (
-        <>
-          <Loader />
-        </>
-      ) : (
-        <Row className="row">
-          {products.length ? (
-            products.map((product) => {
-              return (
-                <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
-                  <Product product={product} />
-                </Col>
-              );
-            })
-          ) : (
-            //   show this only if user has searched for some item and it is not available
-            <Col className="text-center">
-              <div>
-                <i className="far fa-frown" /> No items found for this search
-                query
-              </div>
-              Go Back to the <Link to="/">Home Page</Link>
-            </Col>
-          )}
-        </Row>
-      )}
-      <Footer />
+      <Products />
     </Fragment>
   );
 };

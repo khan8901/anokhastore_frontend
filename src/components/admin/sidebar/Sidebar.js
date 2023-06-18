@@ -38,18 +38,18 @@ const Sidebar = () => {
         <span>List</span>
         <div className="mt-1">
           <li>
-            <Link to="/admin/products">
+            <Link to="/admin-products">
               <HiTemplate className="me-3" size={25} /> Products
             </Link>
           </li>
           <li>
-            <Link to="/admin/orders">
+            <Link to="/admin-orders">
               <MdOutlineFavoriteBorder className="me-3" size={25} />
               Orders
             </Link>
           </li>
           <li>
-            <Link to="/admin/users">
+            <Link to="/users">
               <BiUserCircle className="me-3" size={25} />
               Users
             </Link>
@@ -66,7 +66,7 @@ const Sidebar = () => {
         <span>Service</span>
         <div className="mt-1">
           <li>
-            <Link to="/admin/products/new">
+            <Link to="/add-products">
               <FiPlusSquare className="me-3" size={25} />
               Add Product
             </Link>

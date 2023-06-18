@@ -20,7 +20,7 @@ const Dashboard = () => {
     title: "USERS",
     total: users?.length,
     link: (
-      <Link style={{ textDecoration: "none" }} to={"/admin/users"}>
+      <Link style={{ textDecoration: "none" }} to={"/users"}>
         See all user
       </Link>
     ),
@@ -30,7 +30,7 @@ const Dashboard = () => {
     title: "ORDERS",
     total: orders?.length,
     link: (
-      <Link style={{ textDecoration: "none" }} to={"/admin/orders"}>
+      <Link style={{ textDecoration: "none" }} to={"/admin-orders"}>
         See all orders
       </Link>
     ),
@@ -40,7 +40,7 @@ const Dashboard = () => {
     title: "PRODUCTS",
     total: products?.length,
     link: (
-      <Link style={{ textDecoration: "none" }} to={"/admin/products"}>
+      <Link style={{ textDecoration: "none" }} to={"/admin-products"}>
         See all products
       </Link>
     ),
@@ -50,7 +50,7 @@ const Dashboard = () => {
     title: "STOCK OUT",
     total: stockout.length,
     link: (
-      <Link style={{ textDecoration: "none" }} to={"/admin/users"}>
+      <Link style={{ textDecoration: "none" }} to={"/users"}>
         See all user
       </Link>
     ),

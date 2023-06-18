@@ -30,7 +30,7 @@ const Profile = () => {
             <div className="col-md-6">
               <ProfileLink />
             </div>
-            <div className="col-md-9">
+            <div className="col-md-6">
               {loading ? (
                 <Loader />
               ) : (

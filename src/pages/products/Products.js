@@ -49,7 +49,7 @@ const Products = ({ match }) => {
   const resPerPage = 10;
   const filteredProductsCount = 10;
 
-  const keyword = match.params.keyword;
+  // const keyword = match.params.keyword;
 
   // useEffect(() => {
   //   if (error) {
@@ -64,13 +64,11 @@ const Products = ({ match }) => {
   }
 
   let count = productsCount;
-  if (keyword) {
-    count = filteredProductsCount;
-  }
+
   return (
     <Fragment>
       <MetaData title={"All Products"} />
-      <Navbar />
+      {/* <Navbar /> */}
       {loading ? (
         <>
           <div className={styles.spinner}>

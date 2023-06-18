@@ -12,6 +12,7 @@ const cartDB = [
     name: "Product 1",
     price: 19.99,
     stock: 10,
+    quantity: 1,
   },
   {
     _id: "2",
@@ -23,6 +24,8 @@ const cartDB = [
     name: "Product 2",
     price: 29.99,
     stock: 5,
+
+    quantity: 2,
   },
   {
     _id: "3",
@@ -34,6 +37,8 @@ const cartDB = [
     name: "Product 3",
     price: 9.99,
     stock: 15,
+
+    quantity: 3,
   },
 ];
 

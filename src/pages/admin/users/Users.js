@@ -21,14 +21,14 @@ const Users = ({ history }) => {
 
   const loading = false;
 
-  const deleteUserHandler = (id) => {
-    // dispatch(deleteUser(id));
-  };
+  const deleteUserHandler = (id) => {};
   return (
     <div className={styles.users}>
       <MetaData title={"All Users"} />
       <div className="row g-0">
-        <div className="col-md-2">{/* <Sidebar /> */}</div>
+        <div className="col-md-2">
+          <Sidebar />
+        </div>
         <div className="col-md-10">
           {/* <Navbar /> */}
           <div className={`${styles.table} container mt-3`}>

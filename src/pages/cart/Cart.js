@@ -36,6 +36,7 @@ const Cart = ({ history }) => {
   const checkoutHandler = () => {
     history.push("/login?redirect=shipping");
   };
+
   return (
     <Fragment>
       <MetaData title={"Cart"} />
@@ -52,9 +53,9 @@ const Cart = ({ history }) => {
                 <hr />
                 <div>
                   {cartItems.map((item) => (
-                    <Fragment>
+                    <Fragment key={item.product}>
                       <hr />
-                      <div className={styles.cart_item} key={item.product}>
+                      <div className={styles.cart_item}>
                         <div className={`row ${styles.item_info}`}>
                           <div className="col-4 col-lg-2">
                             <img
@@ -130,10 +131,7 @@ const Cart = ({ history }) => {
                 <p>
                   Subtotal:
                   <span className="ms-3">
-                    {cartItems.reduce(
-                      (acc, item) => acc + Number(item.quantity),
-                      0
-                    )}
+                    {cartItems.reduce((acc, item) => acc + item.quantity, 0)}{" "}
                     (Units)
                   </span>
                 </p>

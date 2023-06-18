@@ -3,7 +3,6 @@ import { useAlert } from "react-alert";
 import { AiFillStar, AiOutlineEye } from "react-icons/ai";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { Link } from "react-router-dom";
-// import { addItemToCart } from "../../actions/cartActions";
 
 import styles from "./Products.module.scss";
 
@@ -12,7 +11,6 @@ const Product = ({ product }) => {
   const alert = useAlert();
 
   const addToCart = () => {
-    // dispatch(addItemToCart(product._id, 1));
     alert.success("Item Added to Cart");
   };
   return (
@@ -25,9 +23,8 @@ const Product = ({ product }) => {
           <p className={styles.product_name}>{product?.name}</p>
         </Link>
         <div className="d-flex align-items-center justify-content-between mt-5">
-          <div className={styles.product_rating}>
-            <AiFillStar size={20} color={"gold"} />
-            <span className="ms-2">{product?.numOfReviews}</span>
+          <div className={styles.button_add_to_Cart}>
+            <button className={styles.button_add}>Add to Cart</button>
           </div>
           <div>
             <span className="fw-bold">$ {product?.price}</span>
