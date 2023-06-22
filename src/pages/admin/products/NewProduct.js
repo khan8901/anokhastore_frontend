@@ -1,15 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
+import { useAlert } from "react-alert";
 
 import styles from "./NewProduct.module.scss";
-
+import ButtonLoader from "../../../components/loader/ButtonLoader";
+import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
-import { UserContext } from "../../../context/UserContext";
-import { baseUrl } from "../../../config";
-import axios from "axios";
-import { Image, Transformation, CloudinaryContext, openUploadWidget } from 'cloudinary-react';
-
-
 
 const NewProduct = ({ history }) => {
   const [name, setName] = useState("");
@@ -19,15 +16,9 @@ const NewProduct = ({ history }) => {
   const [stock, setStock] = useState(0);
   const [seller, setSeller] = useState("");
   const [images, setImages] = useState([]);
-
-  
-
-
-  //const { setUser, setToken, setAuthenticated } = useContext(UserContext);
-  const { token, user} = useContext(UserContext); 
+  const [imagesPreview, setImagesPreview] = useState([]);
 
   const categories = [
-    "Choose Categories",
     'Electronics',
     'Cameras',
     'Laptops',
@@ -43,77 +34,55 @@ const NewProduct = ({ history }) => {
 
   ];
 
+  const alert = useAlert();
 
+  const loading = false;
+  const error = false;
+  const success = true;
 
-  const uploadProduct = async (e) => { 
+  const submitHandler = (e) => {
     e.preventDefault();
 
-    const data = { 
-      name:name, 
-      price:price, 
-      description:description, 
-      category:category, 
-      stock:stock, 
-      seller:seller,
-       images:images,
-       user :user._id
-    }
+    const formData = new FormData();
+    formData.set("name", name);
+    formData.set("price", price);
+    formData.set("description", description);
+    formData.set("category", category);
+    formData.set("stock", stock);
+    formData.set("seller", seller);
 
-    try {
-      console.log(data, " this is data1 ");
-      console.log(token, " this is token ");
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
 
-      const response = await axios.post(`${baseUrl}/admin/product/new`, data, {
+    // dispatch(newProduct(formData));
+  };
 
-      headers: {
-          Authorization: `Bearer ${token}`
+  const onChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    setImagesPreview([]);
+    setImages([]);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((oldArray) => [...oldArray, reader.result]);
+          setImages((oldArray) => [...oldArray, reader.result]);
         }
-      });
-      // Handle the response
-      console.log(response.data);
-    } catch (error) {
-      // Handle the error
-      console.error(error);
-    }
-  };
+      };
 
-
-
-  const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-
-    const imageArray = files.map((file) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-    });
-
-    Promise.all(imageArray)
-      .then((base64Array) => {
-        setImages((prevImages) => [...prevImages, ...base64Array]);
-      })
-      .catch((error) => {
-        console.error('Error converting images:', error);
-      });
-
-      console.log(images, " this is images array ")
-  };
-
-  const handleRemoveImage = (index) => {
-    setImages((prevImages) => {
-      const updatedImages = [...prevImages];
-      updatedImages.splice(index, 1);
-      return updatedImages;
+      reader.readAsDataURL(file);
     });
   };
-
-
-
-  
+  const deleteImage = (index) => {
+    setImagesPreview((prevImagesPreview) =>
+      prevImagesPreview.filter((_, i) => i !== index)
+    );
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
 
 
 
@@ -121,13 +90,14 @@ const NewProduct = ({ history }) => {
     <div className={styles.new_product}>
       <MetaData title={"Add Product"} />
       <div className="row g-0">
-      <div className="col-md-2">
+        <div className="col-md-2">
           <Sidebar />
         </div>
-                <div className="col-md-10">
+        <div className="col-md-10">
           <div className={styles.product_input}>
             <div className={styles.form}>
               <h4>Add Product</h4>
+              <form onSubmit={submitHandler}>
                 {/* name section  */}
                 <div className={styles.from_group}>
                   <label htmlFor="name_field">Name</label>
@@ -207,71 +177,48 @@ const NewProduct = ({ history }) => {
                   </div>
                 </div>
 
-                {/* types section  */}
-            
+              
 
-                {/* image section  */}
-                <div>
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleImageUpload}
-      />
-
-      {images.length > 0 && (
-        <div>
-          <h2>Preview</h2>
-          <ul className="image-list">
-            {images.map((image, index) => (
-              <li key={index} className="image-item">
-                <img src={image} alt={`Preview ${index + 1}`} />
-                <button
-                  className="remove-button"
-                  onClick={() => handleRemoveImage(index)}
-                >
-                  X
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <style jsx>{`
-        .image-list {
-          list-style: none;
-          padding: 0;
-        }
-
-        .image-item {
-          display: flex;
-          align-items: center;
-          margin-bottom: 10px;
-        }
-
-        .image-item img {
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-          margin-right: 10px;
-        }
-
-        .remove-button {
-          background: none;
-          border: none;
-          color: red;
-          cursor: pointer;
-        }
-      `}</style>
-    </div>
-
-     
                 <div className={styles.from_group}>
-                  <button type="submit"  onClick={(e)=> uploadProduct(e)} >
-                    Add Product
+                  <label>Images</label>
+
+                  <div className="image_file ms-2">
+                    <input
+                      type="file"
+                      name="product_images"
+                      id="customFile"
+                      onChange={onChange}
+                      multiple
+                    />
+                    <AiOutlineCloudUpload size={20} />
+                  </div>
+
+                  <div>
+                    {imagesPreview.map((img, index) => (
+                      <div key={img} className={styles.image_container}>
+                        <img
+                          src={img}
+                          alt="Images Preview"
+                          className="mt-3 me-2"
+                          width="85"
+                          height="80"
+                        />
+                        <button
+                          className={styles.delete_button}
+                          onClick={() => deleteImage(index)}
+                        >
+                          &#x2716; {/* Unicode for cross symbol */}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.from_group}>
+                  <button type="submit">
+                    {loading ? <ButtonLoader /> : "dkjsnkjdk"}
                   </button>
                 </div>
+              </form>
             </div>
           </div>
         </div>

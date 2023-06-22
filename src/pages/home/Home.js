@@ -1,54 +1,41 @@
 import React, { Fragment, useEffect } from "react";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
-import { getAdminProducts } from "../../actions/productAction";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import "./home.css";
+// import { getAdminProducts } from "../../actions/productAction";
+import Product from "../../components/product/Product";
+import { Row, Col } from "react-bootstrap";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/header/Navbar";
 import Loader from "../../components/loader/Loader";
 import MetaData from "../../components/MetaData";
-import Banner from "./banner/Banner";
-import Category from "./category/Category";
-import Fashion from "./fashion/Fashion";
+import Carousel from "../../components/car/Carousel";
+import products from "../../db/productsDB";
+import Products from "../products/Products";
 
 const Home = () => {
-    const alert = useAlert();
-    const dispatch = useDispatch();
-    const { loading, error, products } = useSelector((state) => state.products);
+  const alert = useAlert();
+  // const { loading, error, products } = useSelector((state) => state.products);
+  let loading = false;
+  let error = false;
 
-    // filter products by types
+  // filter products by types
 
-    const mens = products.filter((item) => item.type === "Men");
-    const womens = products.filter((item) => item.type === "Women");
-    const kids = products.filter((item) => item.type === "Kids");
+  useEffect(() => {
+    // dispatch(getAdminProducts());
 
-    useEffect(() => {
-        dispatch(getAdminProducts());
-
-        if (error) {
-            return alert.error(error);
-        }
-    }, [dispatch, alert, error]);
-    return (
-        <Fragment>
-            <MetaData title={"Home"} />
-            <Navbar />
-            <Banner />
-            <Category />
-            {loading ? (
-                <>
-                    <Loader />
-                </>
-            ) : (
-                <>
-                    <Fashion products={mens} type="mens" />
-                    <Fashion products={womens} type="womens" />
-                    <Fashion products={kids} type="kids" />
-                </>
-            )}
-
-            <Footer />
-        </Fragment>
-    );
+    if (error) {
+      return alert.error(error);
+    }
+  }, [alert, error]);
+  return (
+    <Fragment>
+      <MetaData title={"Home"} />
+      <Navbar />
+      <Carousel />
+      <Products />
+    </Fragment>
+  );
 };
 
 export default Home;
