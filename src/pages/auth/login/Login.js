@@ -7,12 +7,9 @@ import Navbar from "../../../components/header/Navbar";
 import ButtonLoader from "../../../components/loader/ButtonLoader";
 import MetaData from "../../../components/MetaData";
 import styles from "./Login.module.scss";
-import axios from 'axios';
+import axios from "axios";
 import { baseUrl } from "../../../config";
 import { UserContext } from "../../../context/UserContext";
-
-
-
 
 const Login = ({ history, location }) => {
   const { setUser, setToken, setAuthenticated } = useContext(UserContext);
@@ -20,13 +17,10 @@ const Login = ({ history, location }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-
   const alert = useAlert();
 
   const error = false;
   const loading = false;
-
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -36,34 +30,30 @@ const Login = ({ history, location }) => {
     }
 
     if (error) {
-      console.log(error); 
-
-     }
+      console.log(error);
+    }
   }, []);
-
-
 
   const login = async () => {
     try {
-     // const token = 'your-bearer-token';
-      const response = await axios.post(`${baseUrl}/login`, { email,password });
+      // const token = 'your-bearer-token';
+      const response = await axios.post(`${baseUrl}/login`, {
+        email,
+        password,
+      });
       // Handle the response
-      const data = response.data; 
+      const data = response.data;
 
       console.log(response.data);
-      setUser(data.user); 
-      setToken(data.token); 
-      setAuthenticated(true);   
-      if(response.data.success == true) { 
-        history.push(redirect); 
+      setUser(data.user);
+      setToken(data.token);
+      setAuthenticated(true);
+      if (response.data.success == true) {
+        history.push(redirect);
       }
-
-
     } catch (error) {
       // Handle the error
-         console.log(error); 
-         
- 
+      console.log(error);
     }
   };
   const submitHandler = (e) => {
@@ -96,7 +86,12 @@ const Login = ({ history, location }) => {
               />
             </div>
             <div className={styles.from_group}>
-              <button type="submit" onClick={()=> {login()}}>
+              <button
+                type="submit"
+                onClick={() => {
+                  login();
+                }}
+              >
                 {loading ? <ButtonLoader /> : "Login"}
               </button>
             </div>

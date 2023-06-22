@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import CheckoutSteps from "../checkoutSteps/CheckoutSteps";
 import styles from "./Payment.module.scss";
-
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   useStripe,
@@ -12,8 +12,6 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-
-// import { clearErrors, createOrder } from "../../../actions/orderActions";
 import Navbar from "../../../components/header/Navbar";
 import Footer from "../../../components/footer/Footer";
 import MetaData from "../../../components/MetaData";
@@ -34,18 +32,14 @@ const Payment = ({ history }) => {
   const alert = useAlert();
   const stripe = useStripe();
   const elements = useElements();
-  const dispatch = useDispatch();
-
-  const { user } = useSelector((state) => state.auth);
-  const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  const { error } = useSelector((state) => state.newOrder);
-
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-  }, [dispatch, alert, error]);
+  const user = {
+    name: "Saad",
+    email: "saad@gmail.com",
+  };
+  const location = useLocation();
+  const shippingInfo = location.state;
+  console.log(shippingInfo);
+  const cartItems = useSelector((state) => state.cart);
 
   const order = {
     orderItems: cartItems,
@@ -106,8 +100,6 @@ const Payment = ({ history }) => {
             status: result.paymentIntent.status,
           };
 
-          // dispatch(createOrder(order));
-
           history.push("/success");
         } else {
           alert.error("There is some issue while payment processing");
@@ -123,8 +115,10 @@ const Payment = ({ history }) => {
       <MetaData title={"Payment"} />
       <Navbar />
       <div className={styles.payment}>
-        <div className="container">
-          <CheckoutSteps shipping confirmOrder payment />
+        <div className={styles.container}>
+          <div className="checkout">
+            <CheckoutSteps shipping confirmOrder payment />
+          </div>
 
           <div className={styles.payment_container}>
             <form onSubmit={submitHandler}>

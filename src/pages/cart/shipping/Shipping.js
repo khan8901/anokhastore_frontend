@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import CheckoutSteps from "../checkoutSteps/CheckoutSteps";
 import { countries } from "countries-list";
 import styles from "./Shipping.module.scss";
@@ -11,21 +10,23 @@ import MetaData from "../../../components/MetaData";
 const Shipping = ({ history }) => {
   const countriesList = Object.values(countries);
 
-  const { shippingInfo } = useSelector((state) => state.cart);
+  // const { shippingInfo } = useSelector((state) => state.cart);
 
-  const [address, setAddress] = useState(shippingInfo.address);
-  const [city, setCity] = useState(shippingInfo.city);
-  const [postalCode, setPostalCode] = useState(shippingInfo.postalCode);
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
-  const [country, setCountry] = useState(shippingInfo.country);
-
-  const dispatch = useDispatch();
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [country, setCountry] = useState("");
 
   const submitHandler = (e) => {
+    const data = { address, city, phoneNo, postalCode, country };
     e.preventDefault();
 
     // dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }));
-    history.push("/confirm");
+    history.push({
+      pathname: "/confirm",
+      state: data,
+    });
   };
   return (
     <Fragment>
@@ -93,7 +94,9 @@ const Shipping = ({ history }) => {
             </div>
 
             <div className={styles.from_group}>
-              <button type="submit">CONTINUE</button>
+              <button type="submit" onClick={submitHandler}>
+                CONTINUE
+              </button>
             </div>
           </form>
         </div>

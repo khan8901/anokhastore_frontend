@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 // import cartItems from "../../db/cartDB";
 import { useSelector, useDispatch } from "react-redux";
 import { remove } from "../../store/cartSlice";
-// import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
 import styles from "./Cart.module.scss";
 import Navbar from "../../components/header/Navbar";
@@ -23,12 +22,12 @@ const Cart = ({ history }) => {
     alert.success("Item Remove from Cart Success");
   };
 
+  let subTotal = 0;
+
   const increaseQty = (id, quantity, stock) => {
     const newQty = quantity + 1;
 
     if (newQty > stock) return;
-
-    // dispatch(addItemToCart(id, newQty));
   };
 
   const decreaseQty = (id, quantity) => {
@@ -96,7 +95,7 @@ const Cart = ({ history }) => {
                               <input
                                 type="number"
                                 value={item.quantity}
-                                readOnly
+                                // readOnly
                               />
 
                               <span
@@ -135,7 +134,13 @@ const Cart = ({ history }) => {
                 <p>
                   Subtotal:
                   <span className="ms-3">
-                    {cartItems.reduce((acc, item) => acc + item.quantity, 0)}{" "}
+                    {
+                      (subTotal = cartItems.reduce(
+                        (total, item) => total + item.price,
+                        0
+                      ))
+                    }
+                    {/* {cartItems.reduce((acc, item) => acc + item.quantity, 0)} */}{" "}
                     (Units)
                   </span>
                 </p>
@@ -144,10 +149,7 @@ const Cart = ({ history }) => {
                   <span className="ms-3">
                     $
                     {cartItems
-                      .reduce(
-                        (acc, item) => acc + item.quantity * item.price,
-                        0
-                      )
+                      .reduce((acc, item) => acc + item.price, 0)
                       .toFixed(2)}
                   </span>
                 </p>

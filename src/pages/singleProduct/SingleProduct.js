@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState , useContext} from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import { useAlert } from "react-alert";
 import Rating from "@mui/material/Rating";
 import { useParams } from "react-router-dom";
@@ -15,19 +15,20 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import styles from "./SingleProduct.module.scss";
-// import { addItemToCart } from "../../actions/cartActions";
+import { useDispatch } from "react-redux";
+import { add } from "../../store/cartSlice";
 import ListReview from "../reviews/ListReview";
 import Navbar from "../../components/header/Navbar";
 import Footer from "../../components/footer/Footer";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import MetaData from "../../components/MetaData";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
 const SingleProduct = ({ match }) => {
-     
   const { setUser, setToken, setAuthenticated } = useContext(UserContext);
   const { token, user, isAuthenticated } = useContext(UserContext);
+  const dispatch = useDispatch();
   const location = useLocation();
   const product = location.state.product;
   console.log(product, " this is product");
@@ -51,10 +52,6 @@ const SingleProduct = ({ match }) => {
     }
   };
   const loading = false;
-  const error = false;
-    
-
-
 
   const increaseQty = () => {
     const count = document.querySelector(".count");
@@ -75,7 +72,7 @@ const SingleProduct = ({ match }) => {
   };
 
   const addToCart = () => {
-    // dispatch(addItemToCart(id, quantity));
+    dispatch(add(product));
     alert.success("Item Added to Cart");
   };
 
@@ -89,7 +86,6 @@ const SingleProduct = ({ match }) => {
     formData.set("comment", comment);
     formData.set("productId", match.params.id);
 
-    // dispatch(newReview(formData));
     setShow(false);
   };
   return (
@@ -103,171 +99,166 @@ const SingleProduct = ({ match }) => {
           </>
         ) : (
           <>
-            <div className="container mb-5">
-              <div className="row g-3">
-                <div className="col-md-6">
-                  {product.images && (
-                    <>
-                      <div className={styles.preview_image}>
-                        <img src={product?.images[0]} alt="" />
-                      </div>
+            {/* <div className="container mb-5"> */}
+            <div className="row g-3">
+              <div className="col-md-6">
+                {product.images && (
+                  <>
+                    <div className={styles.preview_image}>
+                      <img src={product?.images[0]} alt="" />
+                    </div>
 
-                      <div className={styles.products_container}>
+                    <div className={styles.products_container}>
+                      <div
+                        className={styles.products_container_branch}
+                        ref={scrollRef}
+                      >
+                        {product?.images.map((image, index) => (
+                          <div key={index}>
+                            <div className={styles.item}>
+                              <img
+                                src={image}
+                                onClick={() => setPreview(index)}
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className={styles.app__gallery_images_arrows}>
+                        <BsArrowLeftShort
+                          className={styles.gallery__arrow_icon}
+                          onClick={() => scroll("left")}
+                        />
+                        <BsArrowRightShort
+                          className={styles.gallery__arrow_icon}
+                          onClick={() => scroll("right")}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="col-md-6">
+                <div className={styles.Product_info}>
+                  <h4>{product?.name}</h4>
+                  <div className="d-flex align-items-center mt-3">
+                    <h4>$ {product?.price}</h4>
+                    <div className="ms-5">
+                      <div className="rating-outer">
                         <div
-                          className={styles.products_container_branch}
-                          ref={scrollRef}
-                        >
-                          {product?.images.map((image, index) => (
-                            <div key={index}>
-                              <div className={styles.item}>
-                                <img
-                                  src={image}
-                                  onClick={() => setPreview(index)}
-                                  alt=""
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        <div className={styles.app__gallery_images_arrows}>
-                          <BsArrowLeftShort
-                            className={styles.gallery__arrow_icon}
-                            onClick={() => scroll("left")}
-                          />
-                          <BsArrowRightShort
-                            className={styles.gallery__arrow_icon}
-                            onClick={() => scroll("right")}
-                          />
-                        </div>
+                          className="rating-inner"
+                          style={{
+                            width: `${(product.ratings / 5) * 100}%`,
+                          }}
+                        ></div>
                       </div>
-                    </>
-                  )}
-                </div>
-                <div className="col-md-6">
-                  <div className={styles.Product_info}>
-                    <h4>{product?.name}</h4>
-                    <div className="d-flex align-items-center mt-3">
-                      <h4>$ {product?.price}</h4>
-                      <div className="ms-5">
-                        <div className="rating-outer">
-                          <div
-                            className="rating-inner"
-                            style={{
-                              width: `${(product.ratings / 5) * 100}%`,
-                            }}
-                          ></div>
+                      <span id="no_of_reviews">
+                        ({product.numOfReviews} Reviews)
+                      </span>
+                    </div>
+                  </div>
+                  <p>{product?.description}</p>
+                  {/* stock counter  */}
+                  <div className={styles.stock_counter}>
+                    <span className="minus" onClick={decreaseQty}>
+                      <AiOutlineMinus />
+                    </span>
+
+                    <input
+                      className="count"
+                      type="number"
+                      value={quantity}
+                      readOnly
+                    />
+
+                    <span className="plus" onClick={increaseQty}>
+                      <AiOutlinePlus />
+                    </span>
+                  </div>
+                  {/* stock status  */}
+                  <p className="mt-3">
+                    Status:
+                    <span
+                      id="stock_status"
+                      className={
+                        product.stock > 0 ? "greenColor ms-2" : "redColor ms-2"
+                      }
+                    >
+                      <b>{product.stock > 0 ? "In Stock" : "Out of Stock"}</b>
+                    </span>
+                  </p>
+                  {/* product seller  */}
+                  <p id="product_seller mb-3">
+                    Sold by:
+                    <strong className="ms-2">{product.seller}</strong>
+                  </p>
+                  {/* butoon  */}
+                  <div className={styles.button}>
+                    <button disabled={product.stock === 0} onClick={addToCart}>
+                      Add To Cart
+                    </button>
+                    <button>Buy Now</button>
+                  </div>
+                  <div className={styles.review}>
+                    {/* review */}
+                    {user ? (
+                      <>
+                        <button onClick={handleShow}>Submit Review</button>
+                      </>
+                    ) : (
+                      <>
+                        <div className="alert alert-danger mt-5" type="alert">
+                          Login to post your review.
                         </div>
-                        <span id="no_of_reviews">
-                          ({product.numOfReviews} Reviews)
-                        </span>
-                      </div>
-                    </div>
-                    <p>{product?.description}</p>
-                    {/* stock counter  */}
-                    <div className={styles.stock_counter}>
-                      <span className="minus" onClick={decreaseQty}>
-                        <AiOutlineMinus />
-                      </span>
+                      </>
+                    )}
 
-                      <input
-                        className="count"
-                        type="number"
-                        value={quantity}
-                        readOnly
-                      />
-
-                      <span className="plus" onClick={increaseQty}>
-                        <AiOutlinePlus />
-                      </span>
-                    </div>
-                    {/* stock status  */}
-                    <p className="mt-3">
-                      Status:
-                      <span
-                        id="stock_status"
-                        className={
-                          product.stock > 0
-                            ? "greenColor ms-2"
-                            : "redColor ms-2"
-                        }
-                      >
-                        <b>{product.stock > 0 ? "In Stock" : "Out of Stock"}</b>
-                      </span>
-                    </p>
-                    {/* product seller  */}
-                    <p id="product_seller mb-3">
-                      Sold by:
-                      <strong className="ms-2">{product.seller}</strong>
-                    </p>
-                    {/* butoon  */}
-                    <div className={styles.button}>
-                      <button
-                        disabled={product.stock === 0}
-                        onClick={addToCart}
-                      >
-                        Add To Cart
-                      </button>
-                      <button>Buy Now</button>
-                    </div>
-                    <div className={styles.review}>
-                      {/* review */}
-                      {user ? (
-                        <>
-                          <button onClick={handleShow}>Submit Review</button>
-                        </>
-                      ) : (
-                        <>
-                          <div className="alert alert-danger mt-5" type="alert">
-                            Login to post your review.
+                    {show && (
+                      <>
+                        <div className={styles.review_card}>
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h5>Submit Your Review</h5>
+                            <AiOutlineCloseCircle
+                              onClick={() => setShow(false)}
+                              className={styles.icon}
+                              size={25}
+                            />
                           </div>
-                        </>
-                      )}
+                          <div>
+                            <Rating
+                              name="simple-controlled"
+                              value={rating}
+                              onChange={(event, newValue) => {
+                                setRating(newValue);
+                              }}
+                            />
 
-                      {show && (
-                        <>
-                          <div className={styles.review_card}>
-                            <div className="d-flex align-items-center justify-content-between">
-                              <h5>Submit Your Review</h5>
-                              <AiOutlineCloseCircle
-                                onClick={() => setShow(false)}
-                                className={styles.icon}
-                                size={25}
-                              />
-                            </div>
-                            <div>
-                              <Rating
-                                name="simple-controlled"
-                                value={rating}
-                                onChange={(event, newValue) => {
-                                  setRating(newValue);
-                                }}
-                              />
+                            <textarea
+                              name="review"
+                              id="review"
+                              className="form-control mt-3"
+                              value={comment}
+                              onChange={(e) => setComment(e.target.value)}
+                            ></textarea>
 
-                              <textarea
-                                name="review"
-                                id="review"
-                                className="form-control mt-3"
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                              ></textarea>
-
-                              <button onClick={reviewHandler}>Submit</button>
-                            </div>
+                            <button onClick={reviewHandler}>Submit</button>
                           </div>
-                        </>
-                      )}
-                    </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="row">
+            </div>
+            {/* <div className="row">
                 <div className="col-md-6 mt-5">
                   {product.reviews && product.reviews.length > 0 && (
                     <ListReview reviews={product.reviews} />
                   )}
                 </div>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
           </>
         )}
       </div>
