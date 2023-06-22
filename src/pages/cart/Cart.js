@@ -1,7 +1,9 @@
 import React, { Fragment } from "react";
 import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
-import cartItems from "../../db/cartDB";
+// import cartItems from "../../db/cartDB";
+import { useSelector, useDispatch } from "react-redux";
+import { remove } from "../../store/cartSlice";
 // import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
 import styles from "./Cart.module.scss";
@@ -11,9 +13,13 @@ import MetaData from "../../components/MetaData";
 
 const Cart = ({ history }) => {
   const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const cartItems = useSelector((state) => state.cart);
 
   const removeCartItemHandler = (id) => {
     // dispatch(removeItemFromCart(id));
+    dispatch(remove(id));
     alert.success("Item Remove from Cart Success");
   };
 
@@ -53,13 +59,13 @@ const Cart = ({ history }) => {
                 <hr />
                 <div>
                   {cartItems.map((item) => (
-                    <Fragment key={item.product}>
+                    <Fragment key={item._id}>
                       <hr />
                       <div className={styles.cart_item}>
                         <div className={`row ${styles.item_info}`}>
                           <div className="col-4 col-lg-2">
                             <img
-                              src={item.images[0].url}
+                              src={item.images[0]}
                               alt="Laptop"
                               height="80"
                               width="105"
@@ -109,9 +115,7 @@ const Cart = ({ history }) => {
 
                           <div className="col-4 col-lg-1 mt-4 mt-lg-0">
                             <button
-                              onClick={() =>
-                                removeCartItemHandler(item.product)
-                              }
+                              onClick={() => removeCartItemHandler(item._id)}
                             >
                               Remove
                             </button>

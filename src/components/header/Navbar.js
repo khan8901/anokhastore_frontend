@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   AiOutlineLogout,
   AiOutlineShoppingCart,
@@ -16,11 +16,10 @@ import { useAlert } from "react-alert";
 import Announcement from "../announcement/Announcement";
 import Search from "./Search";
 import { UserContext } from "../../context/UserContext";
-
-
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-
+  const items = useSelector((state) => state.cart);
   const [toggle, setToggle] = useState(true);
   const [dropdown, setDropdown] = useState(false);
   const { token, user, isAuthenticated } = useContext(UserContext);
@@ -30,7 +29,6 @@ const Navbar = () => {
   // const { cartItems } = useSelector((state) => state.cart);
 
   let loading = false;
-  let cartItems = [];
 
   // Sticky Menu Area
   // useEffect(() => {
@@ -70,14 +68,13 @@ const Navbar = () => {
                 />
               </Link>
             </div>
-            
           </div>
           <div className="nav_links">
             <ul className="d-flex align-items-center">
               <li className="cart">
                 <Link to="/cart">
                   <AiOutlineShoppingCart className="icon" size={25} />
-                  <span>{cartItems?.length}</span>
+                  <span>{items?.length}</span>
                 </Link>
               </li>
               {loading ? (
@@ -89,9 +86,7 @@ const Navbar = () => {
                   {user ? (
                     <>
                       <li>
-
                         <div> {user.name}</div>
-                        
                       </li>
                       <li>
                         <button
@@ -108,7 +103,7 @@ const Navbar = () => {
                             <AiOutlineUser size={20} className="me-3" />
                             Profile
                           </Link>
-                          {user?.isAdmin == true  && (
+                          {user?.isAdmin == true && (
                             <>
                               <Link
                                 to="/admin"
