@@ -11,7 +11,7 @@ import { AiFillStar, AiOutlineHome } from "react-icons/ai";
 const Sidebar = () => {
   return (
     <div className={styles.sidebar}>
-  {/*     <img
+      {/*     <img
         style={{ height: "40px" }}
         alt=""
       /> */}
@@ -50,12 +50,6 @@ const Sidebar = () => {
             <Link to="/users">
               <BiUserCircle className="me-3" size={25} />
               Users
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin/reviews">
-              <AiFillStar className="me-3" size={25} />
-              Reviews
             </Link>
           </li>
         </div>

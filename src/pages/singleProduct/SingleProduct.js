@@ -2,12 +2,6 @@ import React, { Fragment, useEffect, useState, useContext } from "react";
 import { useAlert } from "react-alert";
 import Rating from "@mui/material/Rating";
 import { useParams } from "react-router-dom";
-import products from "../../db/productsDB";
-// import {
-//     clearErrors,
-//     getProductDetails,
-//     newReview,
-// } from "../../actions/productAction";
 import Loader from "../../components/loader/Loader";
 import {
   AiOutlineCloseCircle,
@@ -17,7 +11,6 @@ import {
 import styles from "./SingleProduct.module.scss";
 import { useDispatch } from "react-redux";
 import { add } from "../../store/cartSlice";
-import ListReview from "../reviews/ListReview";
 import Navbar from "../../components/header/Navbar";
 import Footer from "../../components/footer/Footer";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
@@ -105,7 +98,7 @@ const SingleProduct = ({ match }) => {
                 {product.images && (
                   <>
                     <div className={styles.preview_image}>
-                      <img src={product?.images[0]} alt="" />
+                      <img src={product?.images[preview]} alt="" />
                     </div>
 
                     <div className={styles.products_container}>
@@ -143,7 +136,7 @@ const SingleProduct = ({ match }) => {
                 <div className={styles.Product_info}>
                   <h4>{product?.name}</h4>
                   <div className="d-flex align-items-center mt-3">
-                    <h4>$ {product?.price}</h4>
+                    <h4>£ {product?.price}</h4>
                     <div className="ms-5">
                       <div className="rating-outer">
                         <div
@@ -251,14 +244,6 @@ const SingleProduct = ({ match }) => {
                 </div>
               </div>
             </div>
-            {/* <div className="row">
-                <div className="col-md-6 mt-5">
-                  {product.reviews && product.reviews.length > 0 && (
-                    <ListReview reviews={product.reviews} />
-                  )}
-                </div>
-              </div> */}
-            {/* </div> */}
           </>
         )}
       </div>

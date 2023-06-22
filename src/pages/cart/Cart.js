@@ -147,7 +147,7 @@ const Cart = ({ history }) => {
                 <p>
                   Est. total:
                   <span className="ms-3">
-                    $
+                    £
                     {cartItems
                       .reduce((acc, item) => acc + item.price, 0)
                       .toFixed(2)}

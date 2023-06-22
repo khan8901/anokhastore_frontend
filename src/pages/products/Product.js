@@ -19,7 +19,7 @@ const Product = ({ product }) => {
     dispatch(add(product));
   };
   return (
-    <div className="col-md-4">
+    <div className="col-md-6 col-lg-4">
       <div className={styles.product}>
         <div className={styles.product_image}>
           <img src={product?.images[0]} alt={product?.name} />
@@ -37,7 +37,7 @@ const Product = ({ product }) => {
             </button>
           </div>
           <div>
-            <span className="fw-bold">$ {product?.price}</span>
+            <span className="fw-bold">£ {product?.price}</span>
           </div>
         </div>
         <div className={styles.link_container}>
