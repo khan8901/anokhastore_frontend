@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState, useContext } from "react";
 import { useAlert } from "react-alert";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Footer from "../../../components/footer/Footer";
 import Navbar from "../../../components/header/Navbar";
 import ButtonLoader from "../../../components/loader/ButtonLoader";
@@ -16,6 +16,7 @@ const Register = ({ history, location }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useHistory();
 
   const alert = useAlert();
 
@@ -35,6 +36,7 @@ const Register = ({ history, location }) => {
   }, []);
 
   const register = async () => {
+    console.log("name", name, "email", email, "password", password);
     try {
       const data = {
         name,
@@ -42,17 +44,16 @@ const Register = ({ history, location }) => {
         password,
       };
 
-      // const token = 'your-bearer-token';
       const response = await axios.post(`${baseUrl}/register`, data);
-      // Handle the response
-       setUser(response.data.user); 
-       setToken(response.data.token); 
-       setAuthenticated(true); 
+      console.log(response);
 
-
-
+      setUser(response.data.user);
+      setToken(response.data.token);
+      setAuthenticated(true);
+      navigate.push("/login");
     } catch (error) {
       console.log(error);
+      console.log("This is the error");
 
       // Handle the error
     }
@@ -122,4 +123,3 @@ const Register = ({ history, location }) => {
 };
 
 export default Register;
-

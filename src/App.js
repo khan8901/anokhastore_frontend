@@ -69,7 +69,7 @@ function App() {
             component={ChangePassword}
             exact
           />
-          <ProtectedRoute path="/orders/me" component={MyOrders} exact />
+          <Route path="/orders/me" component={MyOrders} exact />
           <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
 
           <Route path="/shipping" component={Shipping} />
