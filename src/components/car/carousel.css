@@ -1,10 +1,11 @@
 .container {
   display: flex;
-  /* justify-content: center; */
+
+  justify-content: center;
 }
 .carousel-container {
   background-color: #93a893;
-  width: 100%;
+  width: 88%;
   height: 350px;
   margin: 20px;
   padding: 0 auto;
