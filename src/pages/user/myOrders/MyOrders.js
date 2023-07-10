@@ -1,6 +1,8 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useContext, useState } from "react";
 import Loader from "../../../components/loader/Loader";
 import ProfileLink from "../../../components/profileLinks/ProfileLink";
+import { baseUrl } from "../../../config";
+import axios from "axios";
 
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,24 +12,44 @@ import { Link } from "react-router-dom";
 import Navbar from "../../../components/header/Navbar";
 import Footer from "../../../components/footer/Footer";
 import MetaData from "../../../components/MetaData";
+import { UserContext } from "../../../context/UserContext";
 
 const MyOrders = () => {
+  const { user, token } = useContext(UserContext);
+
   const alert = useAlert();
-  const dispatch = useDispatch();
   const loading = false;
   const error = false;
-  const orders = [];
+  const [orders, setOrders] = useState([]);
 
   // const { orders } = useSelector((state) => state.myOrders);
 
   useEffect(() => {
-    // dispatch(myOrders());
-
+    getOrders();
     if (error) {
       alert.error(error);
       // dispatch(clearErrors());
     }
   }, []);
+
+  const getOrders = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      // const token = 'your-bearer-token';
+      const response = await axios.get(`${baseUrl}/orders/me`, {
+        headers: headers,
+        user: user,
+      });
+      const data = response.data.orders;
+      console.log(data, "This is the array of orders");
+      setOrders(data);
+    } catch (error) {
+      // Handle the error
+      console.log(error);
+    }
+  };
   return (
     <Fragment>
       <MetaData title={"My Order"} />

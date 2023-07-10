@@ -22,11 +22,7 @@ const Navbar = () => {
   const items = useSelector((state) => state.cart);
   const [toggle, setToggle] = useState(true);
   const [dropdown, setDropdown] = useState(false);
-  const { token, user, isAuthenticated } = useContext(UserContext);
-  console.log(user, " this is user");
-
-  // const { user, loading } = useSelector((state) => state.auth);
-  // const { cartItems } = useSelector((state) => state.cart);
+  const { user } = useContext(UserContext);
 
   let loading = false;
 
