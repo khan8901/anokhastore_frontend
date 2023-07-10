@@ -62,13 +62,8 @@ function App() {
           <Route path="/cart" component={Cart} exact />
 
           <Route path="/me" component={Profile} exact />
-          {/* <ProtectedRoute path="/me" component={Profile} exact /> */}
           <Route path="/me/update" component={UpdateProfile} exact />
-          <ProtectedRoute
-            path="/me/password"
-            component={ChangePassword}
-            exact
-          />
+          <Route path="/me/password" component={ChangePassword} exact />
           <Route path="/orders/me" component={MyOrders} exact />
           <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
 

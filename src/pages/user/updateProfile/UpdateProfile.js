@@ -50,57 +50,55 @@ const UpdateProfile = ({ history }) => {
       <MetaData title={"Update Profile"} />
       <Navbar />
       <div className={styles.update_profile}>
-        <div className="container mt-5 mb-3">
-          <div className="row g-3">
-            <div className="col-md-3">
-              <ProfileLink />
-            </div>
-            <div className="col-md-9">
-              <div className={styles.form_container}>
-                <h4 className="text-center mt-3">
-                  Update Profile
-                  <form
-                    className={styles.form}
-                    onSubmit={submitHandler}
-                    encType="multipart/form-data"
-                  >
-                    <div className={styles.from_group}>
-                      <label htmlFor="email_field">Name</label>
-                      <input
-                        className="from_input"
-                        name="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        type="text"
-                      />
-                    </div>
-                    <div className={styles.from_group}>
-                      <label htmlFor="email_field">Address</label>
-                      <input
-                        className="from_input"
-                        name="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        type="text"
-                      />
-                    </div>
-                    <div className={styles.from_group}>
-                      <label htmlFor="email_field">Phone</label>
-                      <input
-                        className="from_input"
-                        name="phone"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        type="number"
-                      />
-                    </div>
+        <div className="container m-5 row">
+          <div className="col-md-3">
+            <ProfileLink />
+          </div>
+          <div className="col-md-9">
+            <div className={styles.form_container}>
+              <h4 className="text-center mt-3">
+                Update Profile
+                <form
+                  className={styles.form}
+                  onSubmit={submitHandler}
+                  encType="multipart/form-data"
+                >
+                  <div className={styles.from_group}>
+                    <label htmlFor="email_field">Name</label>
+                    <input
+                      className="from_input"
+                      name="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      type="text"
+                    />
+                  </div>
+                  <div className={styles.from_group}>
+                    <label htmlFor="email_field">Address</label>
+                    <input
+                      className="from_input"
+                      name="address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      type="text"
+                    />
+                  </div>
+                  <div className={styles.from_group}>
+                    <label htmlFor="email_field">Phone</label>
+                    <input
+                      className="from_input"
+                      name="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      type="number"
+                    />
+                  </div>
 
-                    <div className={styles.from_group}>
-                      <button>{loading ? <ButtonLoader /> : "Update"}</button>
-                    </div>
-                  </form>
-                </h4>
-              </div>
+                  <div className={styles.from_group}>
+                    <button>{loading ? <ButtonLoader /> : "Update"}</button>
+                  </div>
+                </form>
+              </h4>
             </div>
           </div>
         </div>

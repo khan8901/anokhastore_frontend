@@ -27,7 +27,7 @@ const MyOrders = () => {
       alert.error(error);
       // dispatch(clearErrors());
     }
-  }, [dispatch, alert, error]);
+  }, []);
   return (
     <Fragment>
       <MetaData title={"My Order"} />

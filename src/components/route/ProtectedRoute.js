@@ -1,14 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { UserContext } from "../../context/UserContext";
 
 const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
-  // const { isAuthenticated, loading, user } = useSelector(
-  //     (state) => state.auth
-  // );
+  const { user } = useContext(UserContext);
+
   const isAuthenticated = true;
   const loading = true;
-  const user = {};
   return (
     <Fragment>
       {loading === false && (
