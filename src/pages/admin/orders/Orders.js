@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 // import {
 //     allOrders,
 //     clearErrors,
@@ -12,9 +12,17 @@ import { Table } from "react-bootstrap";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import MetaData from "../../../components/MetaData";
-import orders from "../../../db/ordersDB";
+import { baseUrl } from "../../../config";
+import axios from "axios";
+
+// import orders from "../../../db/ordersDB";
+import { UserContext } from "../../../context/UserContext";
+import { useState } from "react";
 
 const Orders = ({ history }) => {
+  const { user, token } = useContext(UserContext);
+  const [orders, setOrders] = useState([]);
+
   const alert = useAlert();
   console.log("Orders is called.");
 
@@ -23,7 +31,7 @@ const Orders = ({ history }) => {
   const error = false;
 
   useEffect(() => {
-    // dispatch(allOrders());
+    getOrders();
 
     if (error) {
       alert.error(error);
@@ -35,6 +43,23 @@ const Orders = ({ history }) => {
       history.push("/admin/orders");
     }
   }, []);
+  const getOrders = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${baseUrl}/admin/orders`, {
+        headers: headers,
+        user: user,
+      });
+      const data = response.data.orders;
+      console.log(data, "This is the array of orders");
+      setOrders(data);
+    } catch (error) {
+      // Handle the error
+      console.log(error);
+    }
+  };
 
   const deleteOrderHandler = (id) => {
     // dispatch(deleteOrder(id));

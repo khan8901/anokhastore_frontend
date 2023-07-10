@@ -28,7 +28,6 @@ const MyOrders = () => {
     getOrders();
     if (error) {
       alert.error(error);
-      // dispatch(clearErrors());
     }
   }, []);
 

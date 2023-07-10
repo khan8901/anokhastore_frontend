@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
 import { Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
-
+import axios from "axios";
+import { baseUrl } from "../../../config";
 import styles from "./ProductsList.module.scss";
 // import {
 //     clearErrors,
@@ -10,6 +11,7 @@ import styles from "./ProductsList.module.scss";
 //     getAdminProducts,
 // } from "../../../actions/productAction";
 import Loader from "../../../components/loader/Loader";
+import { UserContext } from "../../../context/UserContext";
 import { Link } from "react-router-dom";
 
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
@@ -18,12 +20,39 @@ import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
 import products from "../../../db/productsDB";
 const ProductsList = ({ history }) => {
+  const { user, token } = useContext(UserContext);
+  const [products, setProducts] = useState([]);
+
   const alert = useAlert();
 
   const loading = false;
   const error = false;
   const isDeleted = false;
+  useEffect(() => {
+    getProductsList();
+    if (error) {
+      alert.error(error);
+    }
+  }, []);
 
+  const getProductsList = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${baseUrl}/admin/products`, {
+        headers: headers,
+        user: user,
+      });
+      console.log(response, "This is response");
+      const data = response.data.products;
+      console.log(data, "This is the response.data");
+      setProducts(data);
+    } catch (error) {
+      // Handle the error
+      console.log(error);
+    }
+  };
   const deleteProductHandler = (id) => {
     // dispatch(deleteProduct(id));
   };
@@ -65,7 +94,7 @@ const ProductsList = ({ history }) => {
                                 height: "40px",
                                 width: "40px",
                               }}
-                              src={product?.images[0].url}
+                              src={product?.images[0]}
                               alt={product?.name}
                             />
                           </td>

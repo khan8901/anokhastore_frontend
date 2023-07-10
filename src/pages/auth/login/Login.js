@@ -100,7 +100,7 @@ const Login = ({ history, location }) => {
             <p className="text-center text-white">
               Dont Have Account ? <Link to="/register">Signup</Link>
             </p>
-            <p className="text-center text-white">
+            <p className="text-center ">
               <Link to="/password/forgot">Forgot Password?</Link>
             </p>
           </div>

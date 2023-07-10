@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import { Spinner } from "react-bootstrap";
 
 import "./Navbar.scss";
-import { Link, Route } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 // import { logout } from "../../actions/userActions";
 import Announcement from "../announcement/Announcement";
@@ -22,7 +22,8 @@ const Navbar = () => {
   const items = useSelector((state) => state.cart);
   const [toggle, setToggle] = useState(true);
   const [dropdown, setDropdown] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser, setAuthenticated } = useContext(UserContext);
+  const history = useHistory();
 
   let loading = false;
 
@@ -45,23 +46,20 @@ const Navbar = () => {
 
   const alert = useAlert();
 
-  // const logoutHandler = () => {
-  //   dispatch(logout());
-  //   alert.success("Logged out successfully.");
-  // };
+  const logoutHandler = () => {
+    setUser(null);
+    setAuthenticated(null);
+    alert.success("Logged out successfully.");
+  };
   return (
     <div className="nav_container">
       {/* <Announcement /> */}
       <nav className="navbar">
         <div className="container">
           <div className="left-navbar">
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center logo">
               <Link to="/">
-                <img
-                  style={{ height: "50px" }}
-                  src={require("../../assets/logo.png")}
-                  alt=""
-                />
+                <h2>Anokha</h2>
               </Link>
             </div>
           </div>
@@ -113,11 +111,7 @@ const Navbar = () => {
                               </Link>
                             </>
                           )}
-                          <Link
-                            to="/login"
-                            id="logout"
-                            // onClick={logoutHandler}
-                          >
+                          <Link to="/login" id="logout" onClick={logoutHandler}>
                             <AiOutlineLogout size={20} className="me-3" />
                             Logout
                           </Link>

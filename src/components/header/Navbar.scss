@@ -11,6 +11,10 @@
     justify-content: space-between;
     .left-navbar {
       display: flex;
+      .logo a {
+        text-decoration: none !important;
+        color: white;
+      }
     }
 
     .search {
