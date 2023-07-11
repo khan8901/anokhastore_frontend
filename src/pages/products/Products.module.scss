@@ -1,3 +1,4 @@
+@import "../../colors.scss";
 .spinner {
   height: 88vh;
   display: flex;
@@ -50,7 +51,7 @@
     width: 20px;
     height: 40px;
     color: white;
-    background-color: #93a893;
+    background-color: $Color1;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
@@ -65,7 +66,7 @@
     }
   }
   .searchBtn {
-    background-color: #93a893;
+    background-color: $Color1;
     color: white;
     padding: 6px;
     border-radius: 3px;
@@ -116,7 +117,7 @@
     padding: 5px;
     margin: 10px;
     border-radius: 5px;
-    background-color: #93a893;
+    background-color: $Color1;
     color: white;
   }
   .product_rating {

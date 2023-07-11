@@ -1,6 +1,8 @@
+@import "../../colors";
+
 .nav_container {
   .navbar {
-    background-color: #93a893;
+    background-color: $Color1;
     z-index: 1000;
     font-family: var(--font-poppins);
     width: 100%;
