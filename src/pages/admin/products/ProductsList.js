@@ -65,9 +65,9 @@ const ProductsList = ({ history }) => {
         user: user,
       });
       console.log(response, "This is response");
-      const data = response.data.products;
+      const data = response.data;
       console.log(data, "This is the response.data");
-      setProducts(data);
+      getProductsList();
     } catch (error) {
       // Handle the error
       console.log(error, "This is the error");
