@@ -1,30 +1,29 @@
-import React, { Fragment, useEffect, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import { useAlert } from "react-alert";
 import Rating from "@mui/material/Rating";
 import { useParams } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
+import axios from "axios";
+import { baseUrl } from "../../config";
 import {
   AiOutlineCloseCircle,
   AiOutlineMinus,
   AiOutlinePlus,
 } from "react-icons/ai";
 import styles from "./SingleProduct.module.scss";
-import { useDispatch } from "react-redux";
 import { add } from "../../store/cartSlice";
 import Navbar from "../../components/header/Navbar";
 import Footer from "../../components/footer/Footer";
 import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import MetaData from "../../components/MetaData";
-import { useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
 const SingleProduct = ({ match }) => {
   const { setUser, setToken, setAuthenticated } = useContext(UserContext);
   const { token, user, isAuthenticated } = useContext(UserContext);
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const product = location.state.product;
-  console.log(product, " this is product");
+
+  let { id } = useParams();
+  console.log(id, "this is the id");
   const [quantity, setQuantity] = useState(1);
   const [preview, setPreview] = useState(0);
   const [rating, setRating] = useState(0);
@@ -32,7 +31,33 @@ const SingleProduct = ({ match }) => {
   const [show, setShow] = useState(false);
   const scrollRef = React.useRef(null);
   const alert = useAlert();
-  let { id } = useParams();
+  const [products, SetProducts] = useState([]);
+  const [product, setProduct] = useState({});
+
+  const getProducts = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/products`);
+      SetProducts(response.data.products);
+      console.log(response, "this is the response");
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw new Error("Failed to fetch products");
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  useEffect(() => {
+    const filteredProduct = products.find((x) => x._id === id);
+    console.log(filteredProduct, "this is the filtered product.");
+    if (filteredProduct) {
+      setProduct(filteredProduct);
+    }
+  }, [products, id]);
 
   // image thumbline
   const scroll = (direction) => {
@@ -65,7 +90,7 @@ const SingleProduct = ({ match }) => {
   };
 
   const addToCart = () => {
-    dispatch(add(product));
+    // dispatch(add(product));
     alert.success("Item Added to Cart");
   };
 

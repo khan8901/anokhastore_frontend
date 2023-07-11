@@ -58,7 +58,7 @@ function App() {
           <Route path="/contact" component={Contact} exact />
           <Route path="/products" component={Products} exact />
           <Route path="/products/search/:keyword" component={Products} />
-          <Route path="/product/:id" component={SingleProduct} exact />
+          <Route path="/product/:id" component={SingleProduct} />
           <Route path="/cart" component={Cart} exact />
 
           <Route path="/me" component={Profile} exact />
