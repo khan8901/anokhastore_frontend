@@ -80,7 +80,7 @@ const Profile = () => {
                                 <BsEmojiSmile size={25} />
                               </td>
                               <td className="fw-bold">Role</td>
-                              <td>{user?.role}</td>
+                              <td>{user.isAdmin ? "Admin" : "User"}</td>
                             </tr>
                           </tbody>
                         </Table>

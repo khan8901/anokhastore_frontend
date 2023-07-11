@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 // import {
@@ -13,9 +13,12 @@ import MetaData from "../../../components/MetaData";
 import ProfileLink from "../../../components/profileLinks/ProfileLink";
 import { UPDATE_PROFILE_RESET } from "../../../constants/userConstants";
 import styles from "./UpdateProfile.module.scss";
+import { UserContext } from "../../../context/UserContext";
 
 const UpdateProfile = ({ history }) => {
-  const [name, setName] = useState("");
+  const { user } = useContext(UserContext);
+  console.log(user, "This is the user");
+  const [name, setName] = useState(user.name);
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -24,13 +27,13 @@ const UpdateProfile = ({ history }) => {
   );
 
   const alert = useAlert();
-  const user = {
-    name: "Ahmad",
-    email: "ahmad@gmail.com",
-    phone: "03120073542",
-    address: "house No 1",
-    role: "admin",
-  };
+  // const user = {
+  //   name: "Ahmad",
+  //   email: "ahmad@gmail.com",
+  //   phone: "03120073542",
+  //   address: "house No 1",
+  //   role: "admin",
+  // };
   const loading = false;
 
   const submitHandler = (e) => {

@@ -1,33 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useAlert } from "react-alert";
+import React, { useEffect, useState, useContext } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-// import {
-//     clearErrors,
-//     getProductDetails,
-//     updateProduct,
-// } from "../../../actions/productAction";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
+import axios from "axios";
+import { baseUrl } from "../../../config";
 import ButtonLoader from "../../../components/loader/ButtonLoader";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
-import { UPDATE_PRODUCT_RESET } from "../../../constants/productsConstants";
-
 import styles from "./UpdateProduct.module.scss";
 import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
+import { UserContext } from "../../../context/UserContext";
 
-const UpdateProduct = ({ history }) => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [stock, setStock] = useState(0);
-  const [seller, setSeller] = useState("");
-  const [type, setType] = useState("");
-  const [images, setImages] = useState([]);
-
-  const [oldImages, setOldImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
+const UpdateProduct = () => {
+  const { user, token } = useContext(UserContext);
+  console.log(user);
+  const [product, setProduct] = useState({});
 
   const categories = [
     "Eid Collection",
@@ -43,49 +29,51 @@ const UpdateProduct = ({ history }) => {
   ];
   const types = ["Men", "Women", "Kids"];
 
-  const alert = useAlert();
-  const dispatch = useDispatch();
-  let { id } = useParams();
+  const { id } = useParams();
+  const loading = false;
 
-  const { error, product } = useSelector((state) => state.productDetails);
-  const {
-    loading,
-    error: updateError,
-    isUpdated,
-  } = useSelector((state) => state.product);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(product.price);
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [stock, setStock] = useState(0);
+  const [seller, setSeller] = useState("");
+  const [type, setType] = useState("");
+  const [images, setImages] = useState([]);
 
-  useEffect(() => {
-    if (product && product._id !== id) {
-      // dispatch(getProductDetails(id));
-    } else {
+  const [oldImages, setOldImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
+
+  const getProduct = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${baseUrl}/product/${id}`, {
+        headers: headers,
+        user: user,
+      });
+      const product = response.data.product;
+      setProduct(product);
       setName(product.name);
-      setPrice(product.price);
       setDescription(product.description);
       setCategory(product.category);
-      setSeller(product.seller);
       setStock(product.stock);
-      setType(product.type);
+      setSeller(product.seller);
+      setPrice(product.price);
       setOldImages(product.images);
+      // setImages(product.images);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
+  useEffect(() => {
+    console.log("Inside useEffect");
+    getProduct();
+  }, []);
 
-    if (updateError) {
-      alert.error(updateError);
-      // dispatch(clearErrors());
-    }
-
-    if (isUpdated) {
-      history.push("/admin/products");
-      alert.success("Product updated successfully");
-      // dispatch({ type: UPDATE_PRODUCT_RESET });
-    }
-  }, [dispatch, alert, error, isUpdated, history, updateError, product, id]);
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -100,8 +88,23 @@ const UpdateProduct = ({ history }) => {
     images.forEach((image) => {
       formData.append("images", image);
     });
-
-    // dispatch(updateProduct(product._id, formData));
+    try {
+      console.log("Inside Try");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      console.log("Before Response");
+      const response = await axios.put(`${baseUrl}/admin/product/${id}`, {
+        headers: headers,
+        user: user,
+      });
+      console.log(response, "This is response");
+      const data = response.data;
+      console.log(data, "This is the response.data");
+    } catch (error) {
+      // Handle the error
+      console.log(error, "This is the error");
+    }
   };
 
   const onChange = (e) => {
@@ -124,6 +127,7 @@ const UpdateProduct = ({ history }) => {
       reader.readAsDataURL(file);
     });
   };
+
   return (
     <div className={styles.new_product}>
       <MetaData title={"Update Products"} />
@@ -253,8 +257,8 @@ const UpdateProduct = ({ history }) => {
                       oldImages.map((img) => (
                         <img
                           key={img}
-                          src={img.url}
-                          alt={img.url}
+                          src={img}
+                          alt={img}
                           className="mt-3 mr-2"
                           width="55"
                           height="52"

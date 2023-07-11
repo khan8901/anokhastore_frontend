@@ -43,8 +43,6 @@ const ChangePassword = ({ history }) => {
     const formData = new FormData();
     formData.set("oldPassword", oldPassword);
     formData.set("password", password);
-
-    // dispatch(updatePassword(formData));
   };
   return (
     <Fragment>

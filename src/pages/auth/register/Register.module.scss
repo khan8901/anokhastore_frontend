@@ -1,3 +1,4 @@
+@import "../../../colors.scss";
 .login {
   min-height: 89vh;
   display: flex;
@@ -6,7 +7,7 @@
   font-family: var(--font-poppins);
 
   .login_container {
-    background: #93a893;
+    background: $Color1;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     // backdrop-filter: blur(4px);
     // -webkit-backdrop-filter: blur(4px);

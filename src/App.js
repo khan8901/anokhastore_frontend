@@ -103,9 +103,9 @@ function App() {
             component={ProductDetails}
             exact
           />
-          <ProtectedRoute
-            path="/admin/product/:id"
-            isAdmin={true}
+          <Route
+            path="/admin_product/:id"
+            // isAdmin={true}
             component={UpdateProduct}
             exact
           />
