@@ -53,8 +53,25 @@ const ProductsList = ({ history }) => {
       console.log(error);
     }
   };
-  const deleteProductHandler = (id) => {
-    // dispatch(deleteProduct(id));
+  const deleteProductHandler = async (id) => {
+    try {
+      console.log("Inside Try");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      console.log("Before Response");
+      const response = await axios.delete(`${baseUrl}/admin/product/${id}`, {
+        headers: headers,
+        user: user,
+      });
+      console.log(response, "This is response");
+      const data = response.data.products;
+      console.log(data, "This is the response.data");
+      setProducts(data);
+    } catch (error) {
+      // Handle the error
+      console.log(error, "This is the error");
+    }
   };
   return (
     <div className={styles.products}>
