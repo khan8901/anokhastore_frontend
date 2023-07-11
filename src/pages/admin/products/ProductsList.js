@@ -102,10 +102,10 @@ const ProductsList = ({ history }) => {
                           <td>{product?.price}</td>
                           <td>{product?.stock}</td>
                           <td className={styles.actions}>
-                            <Link to={`/admin/product/details/${product._id}`}>
+                            <Link to={`/admin_product/details/${product._id}`}>
                               <AiOutlineEye size={20} />
                             </Link>
-                            <Link to={`/admin/product/${product._id}`}>
+                            <Link to={`/admin_product/${product._id}`}>
                               <AiOutlineEdit size={20} />
                             </Link>
                             <button

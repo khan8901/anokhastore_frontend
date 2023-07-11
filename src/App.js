@@ -99,9 +99,9 @@ function App() {
             exact
           />
           <Route
-            path="/admin/product/details/:id"
+            path="/admin_product/details/:id"
             component={ProductDetails}
-            // exact
+            exact
           />
           <ProtectedRoute
             path="/admin/product/:id"

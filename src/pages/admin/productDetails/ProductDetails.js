@@ -1,24 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState, useContext } from "react";
 // import { clearErrors, getProductDetails } from "../../../actions/productAction";
 import Sidebar from "../../../components/admin/sidebar/Sidebar";
-
+import axios from "axios";
+import { baseUrl } from "../../../config";
 import styles from "./ProductDetails.module.scss";
 import { useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import Navbar from "../../../components/admin/navbar/Navbar";
 import MetaData from "../../../components/MetaData";
 import products from "../../../db/productsDB";
+import { UserContext } from "../../../context/UserContext";
 
 const ProductDetails = () => {
+  const { user, token } = useContext(UserContext);
+
   const [preview, setPreview] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState({});
 
   let { id } = useParams();
   console.log(id);
 
   const loading = false;
-  const product = products.filter((x) => products._id === id);
+  useEffect(() => {
+    getProductsList();
+  }, []);
+
+  const getProductsList = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${baseUrl}/admin/products`, {
+        headers: headers,
+        user: user,
+      });
+      console.log(response, "This is response");
+      const data = response.data.products;
+      console.log(data, "This is the response.data");
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    const filteredProduct = products.find((x) => x._id === id);
+    console.log(filteredProduct, "this is the filtered product.");
+    if (filteredProduct) {
+      setProduct(filteredProduct);
+    }
+  }, [products, id]);
 
   return (
     <div className={styles.product_details}>
@@ -40,14 +71,15 @@ const ProductDetails = () => {
                   <div className="col-md-6">
                     {product.images && (
                       <>
+                        {console.log("Inside imges")}
                         <div className={styles.preview_image}>
-                          <img src={product?.images[preview].url} alt="" />
+                          <img src={product?.images[preview]} alt="" />
                         </div>
                         <div className={styles.image_thumbline}>
                           {product?.images.map((image, index) => (
-                            <div key={image._id}>
+                            <div key={index}>
                               <img
-                                src={image.url}
+                                src={image}
                                 onClick={() => setPreview(index)}
                                 alt=""
                               />
