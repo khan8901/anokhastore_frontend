@@ -27,7 +27,7 @@ const Product = ({ product }) => {
         <Link to={{ pathname: `/product/${product?._id}`, state: { product } }}>
           <p className={styles.product_name}>{product?.name}</p>
         </Link>
-        <div className="d-flex align-items-center justify-content-between mt-5">
+        <div className="d-flex align-items-center justify-content-between">
           <div className={styles.button_add_to_Cart}>
             <button
               onClick={() => handleAdd(product)}

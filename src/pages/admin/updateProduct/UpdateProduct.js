@@ -94,10 +94,15 @@ const UpdateProduct = () => {
         Authorization: `Bearer ${token}`,
       };
       console.log("Before Response");
-      const response = await axios.put(`${baseUrl}/admin/product/${id}`, {
-        headers: headers,
-        user: user,
-      });
+      const response = await axios.put(
+        `${baseUrl}/admin/product/${id}`,
+        formData,
+        {
+          headers: headers,
+          user: user,
+          id: user.id,
+        }
+      );
       console.log(response, "This is response");
       const data = response.data;
       console.log(data, "This is the response.data");
