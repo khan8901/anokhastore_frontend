@@ -12,6 +12,8 @@ import MetaData from "../../components/MetaData";
 import Carousel from "../../components/car/Carousel";
 import products from "../../db/productsDB";
 import Products from "../products/Products";
+import Cates from "./Cats/Cates";
+import Banner from "../../components/banner/Banner";
 
 const Home = () => {
   const alert = useAlert();
@@ -32,7 +34,9 @@ const Home = () => {
     <Fragment>
       <MetaData title={"Home"} />
       <Navbar />
-      <Carousel />
+      <Cates />
+      <Banner />
+      {/* <Carousel /> */}
       <Products />
     </Fragment>
   );

@@ -73,9 +73,10 @@
   }
 }
 .product {
-  background-color: #f4f4f4;
+  background-color: white;
   padding: 1rem;
   border-radius: 20px;
+  max-width: 250px;
   font-family: var(--font-poppins);
   position: relative;
   transition: all 0.5s ease-in-out;
@@ -93,8 +94,8 @@
     height: 200px;
     text-align: center;
     img {
-      width: 200px;
-      height: 200px;
+      width: 160px;
+      height: 160px;
       object-fit: contain;
       transition: all 0.5s ease-in-out;
     }
@@ -108,8 +109,9 @@
     color: var(--color-black);
 
     .product_name {
-      height: 20px;
-      font-size: larger;
+      margin-top: 10px;
+      height: 50px;
+      font-size: 15px;
       font-weight: 600;
     }
   }
@@ -117,11 +119,12 @@
     color: blueviolet;
   }
   .button_add {
-    padding: 5px;
+    padding: 10px;
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: $Color1;
     color: white;
+    font-size: small;
   }
   .product_rating {
     width: max-content;

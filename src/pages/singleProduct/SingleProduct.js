@@ -120,42 +120,44 @@ const SingleProduct = ({ match }) => {
             {/* <div className="container mb-5"> */}
             <div className="row g-3">
               <div className="col-md-6">
-                {product.images && (
-                  <>
-                    <div className={styles.preview_image}>
-                      <img src={product?.images[preview]} alt="" />
-                    </div>
+                <div className={styles.leftSide}>
+                  {product.images && (
+                    <>
+                      <div className={styles.preview_image}>
+                        <img src={product?.images[preview]} alt="" />
+                      </div>
 
-                    <div className={styles.products_container}>
-                      <div
-                        className={styles.products_container_branch}
-                        ref={scrollRef}
-                      >
-                        {product?.images.map((image, index) => (
-                          <div key={index}>
-                            <div className={styles.item}>
-                              <img
-                                src={image}
-                                onClick={() => setPreview(index)}
-                                alt=""
-                              />
+                      <div className={styles.products_container}>
+                        <div
+                          className={styles.products_container_branch}
+                          ref={scrollRef}
+                        >
+                          {product?.images.map((image, index) => (
+                            <div key={index}>
+                              <div className={styles.item}>
+                                <img
+                                  src={image}
+                                  onClick={() => setPreview(index)}
+                                  alt=""
+                                />
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
+                        <div className={styles.app__gallery_images_arrows}>
+                          <BsArrowLeftShort
+                            className={styles.gallery__arrow_icon}
+                            onClick={() => scroll("left")}
+                          />
+                          <BsArrowRightShort
+                            className={styles.gallery__arrow_icon}
+                            onClick={() => scroll("right")}
+                          />
+                        </div>
                       </div>
-                      <div className={styles.app__gallery_images_arrows}>
-                        <BsArrowLeftShort
-                          className={styles.gallery__arrow_icon}
-                          onClick={() => scroll("left")}
-                        />
-                        <BsArrowRightShort
-                          className={styles.gallery__arrow_icon}
-                          onClick={() => scroll("right")}
-                        />
-                      </div>
-                    </div>
-                  </>
-                )}
+                    </>
+                  )}
+                </div>
               </div>
               <div className="col-md-6">
                 <div className={styles.Product_info}>

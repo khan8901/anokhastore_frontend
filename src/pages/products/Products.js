@@ -114,7 +114,7 @@ const Products = ({ match }) => {
           <div className={styles.products}>
             <div className="container mb-5" style={{ marginTop: "30px" }}>
               <div className="row g-3">
-                <div className="col-md-3 pe-5">
+                {/* <div className="col-md-3 pe-5">
                   <div className={styles.filter}>
                     <p>
                       <BsFilter size={30} className="me-3" />
@@ -167,38 +167,11 @@ const Products = ({ match }) => {
                       </div>
 
                       <hr className="my-3" />
-
-                      {/*  <div className="mt-5">
-                        <h4 className="mb-3">Ratings</h4>
-
-                        <div className="pl-0">
-                          {[5, 4, 3, 2, 1].map((star) => (
-                            <li
-                              style={{
-                                cursor: "pointer",
-                                listStyleType: "none",
-                                margin: "2px 0",
-                              }}
-                              key={star}
-                              onClick={() => setRating(star)}
-                            >
-                              <div className="rating-outer">
-                                <div
-                                  className="rating-inner"
-                                  style={{
-                                    width: `${star * 20}%`,
-                                  }}
-                                ></div>
-                              </div>
-                            </li>
-                          ))}
-                        </div>
-                      </div> */}
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-md-9">
+                <div className="col-md-12">
                   <div className={styles.searchContainer}>
                     <input
                       type="text"
@@ -226,7 +199,7 @@ const Products = ({ match }) => {
                       Search
                     </button>
                   </div>
-                  <div className="row g-3">
+                  <div className="row g-3 mx-auto">
                     {products &&
                       products.map((product) => (
                         <Product key={product._id} product={product} />
