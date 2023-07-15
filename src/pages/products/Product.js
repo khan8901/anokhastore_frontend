@@ -19,7 +19,7 @@ const Product = ({ product }) => {
     dispatch(add(product));
   };
   return (
-    <div className="mx-auto col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify">
+    <div className="mx-auto col-sm-6 col-md-4 col-lg-3">
       <div className={styles.product}>
         <div className={styles.product_image}>
           <img src={product?.images[0]} alt={product?.name} />

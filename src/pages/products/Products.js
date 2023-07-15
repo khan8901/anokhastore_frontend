@@ -44,10 +44,6 @@ const Products = ({ match }) => {
     "Laptops",
     "Accessories",
     "Headphones",
-    "Food",
-    "Books",
-    "Clothes/Shoes",
-    "Beauty/Health",
     "Sports",
     "Outdoor",
     "Home",
@@ -199,7 +195,7 @@ const Products = ({ match }) => {
                       Search
                     </button>
                   </div>
-                  <div className="row g-3 mx-auto">
+                  <div className="row g-3 mx-auto my-3">
                     {products &&
                       products.map((product) => (
                         <Product key={product._id} product={product} />
