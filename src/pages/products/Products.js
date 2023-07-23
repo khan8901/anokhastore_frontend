@@ -14,6 +14,7 @@ import MetaData from "../../components/MetaData";
 //import products from "../../db/productsDB";
 import axios from "axios";
 import { baseUrl } from "../../config";
+import Banner from "../../components/banner/Banner";
 
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -24,7 +25,7 @@ const Products = ({ match }) => {
   const [loading, setLoading] = useState(true);
 
   const [name, setName] = useState("");
-  const [categories, setCategories] = useState("");
+  const [categories, setCategories] = useState("Laptops");
   const [price, setPrice] = useState([1, 1000]);
   const [minPrice, setminPrice] = useState(0);
   const [maxPrice, setmaxPrice] = useState(1000);
@@ -37,6 +38,7 @@ const Products = ({ match }) => {
   };
 
   const cats = [
+    "All",
     "Electronics",
     "Cameras",
     "Laptops",
@@ -44,7 +46,6 @@ const Products = ({ match }) => {
     "Headphones",
     "Sports",
     "Outdoor",
-    "Home",
   ];
 
   // const keyword = match.params.keyword;
@@ -97,8 +98,23 @@ const Products = ({ match }) => {
   }, [price]);
   return (
     <Fragment>
+      <div className={styles.catContainer}>
+        <ul className={styles.catItems}>
+          {cats.map((cat, index) => (
+            <li
+              onClick={() => {
+                cat === "All" ? setCategories("") : setCategories(cat);
+              }}
+              className={styles.catItem}
+              key={index}
+            >
+              {cat}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Banner />
       <MetaData title={"All Products"} />
-      {/* <Navbar /> */}
       {loading ? (
         <>
           <div className={styles.spinner}>
@@ -111,7 +127,7 @@ const Products = ({ match }) => {
             <div className="container mb-5" style={{ marginTop: "30px" }}>
               <div className="row g-9 ">
                 <div
-                  className={`${styles.searchContainer} col-sm-12 col-md-6 col-lg-6`}
+                  className={`${styles.searchContainer} col-sm-12 col-md-6 col-lg-6 mx-4`}
                 >
                   <input
                     type="text"

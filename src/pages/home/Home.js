@@ -34,9 +34,6 @@ const Home = () => {
     <Fragment>
       <MetaData title={"Home"} />
       <Navbar />
-      <Cates />
-      <Banner />
-      {/* <Carousel /> */}
       <Products />
     </Fragment>
   );

@@ -5,6 +5,29 @@
   align-items: center;
   justify-content: center;
 }
+.catContainer {
+  margin: 0px 10px;
+  .catItems {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    overflow-x: scroll;
+    scrollbar-width: thin;
+    scrollbar-width: none;
+    :hover {
+      cursor: pointer;
+    }
+
+    .catItem {
+      display: flex;
+      margin: 0px 20px;
+    }
+  }
+}
+.container .items::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 
 .products {
   font-family: var(--font-poppins);
