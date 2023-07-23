@@ -19,23 +19,21 @@ const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
 const Products = ({ match }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 1000]);
-  const [rating, setRating] = useState(0);
   const [products, SetProducts] = useState(null);
-  const [category, setCategory] = useState("");
-  const [isBottom, setIsBottom] = useState(false);
-
-  const [page, setPage] = useState(1);
-  const [minPrice, setminPrice] = useState("");
-  const [maxPrice, setmaxPrice] = useState("");
-  const [name, setName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchProducts, setSearchProducts] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const [name, setName] = useState("");
+  const [categories, setCategories] = useState("");
+  const [price, setPrice] = useState([1, 1000]);
+  const [minPrice, setminPrice] = useState(0);
+  const [maxPrice, setmaxPrice] = useState(1000);
+  const [page, setPage] = useState("");
+  const [limit, setLimit] = useState(10);
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    setSearchProducts(searchQuery);
+    setName(searchQuery);
   };
 
   const cats = [
@@ -49,23 +47,22 @@ const Products = ({ match }) => {
     "Home",
   ];
 
-  // const {
-  //   loading,
-  //   products,
-  //   error,
-  //   productsCount,
-  //   resPerPage,
-  //   filteredProductsCount,
-  // } = useSelector((state) => state.products);
-  const loading = false;
-
   // const keyword = match.params.keyword;
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/products`);
+      const response = await axios.get(`${baseUrl}/products`, {
+        params: {
+          name,
+          categories,
+          minPrice,
+          maxPrice,
+          page,
+          limit,
+        },
+      });
       SetProducts(response.data.products);
-
+      setLoading(false);
       return response.data;
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -79,7 +76,8 @@ const Products = ({ match }) => {
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight;
       if (isBottom) {
-        setPage((prevPage) => prevPage + 1);
+        // setPage((page) => page + 1);
+        setLimit((limit) => limit + 10);
       }
     };
 
@@ -91,10 +89,12 @@ const Products = ({ match }) => {
 
   useEffect(() => {
     getProducts();
+  }, [name, categories, minPrice, maxPrice, page, limit]);
 
-    console.log(searchProducts);
-  }, [category, page, price, searchProducts]);
-
+  useEffect(() => {
+    setminPrice(price[0]);
+    setmaxPrice(price[1]);
+  }, [price]);
   return (
     <Fragment>
       <MetaData title={"All Products"} />
@@ -109,13 +109,42 @@ const Products = ({ match }) => {
         <>
           <div className={styles.products}>
             <div className="container mb-5" style={{ marginTop: "30px" }}>
-              <div className="row g-3">
-                {/* <div className="col-md-3 pe-5">
+              <div className="row g-9 ">
+                <div
+                  className={`${styles.searchContainer} col-sm-12 col-md-6 col-lg-6`}
+                >
+                  <input
+                    type="text"
+                    placeholder="Search by name"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={styles.searchInput}
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      className={styles.clearSearchBtn}
+                      onClick={() => {
+                        setSearchQuery("");
+                      }}
+                    >
+                      <span>&times;</span>
+                    </button>
+                  )}
+                  <button
+                    type="submit"
+                    className={styles.searchBtn}
+                    onClick={handleSearchSubmit}
+                  >
+                    Search
+                  </button>
+                </div>
+                <div className="col-sm-6 col-md-3 col-lg-3 pe-5">
                   <div className={styles.filter}>
-                    <p>
+                    {/* <p>
                       <BsFilter size={30} className="me-3" />
                       Filter
-                    </p>
+                    </p> */}
 
                     <div
                       style={{
@@ -137,11 +166,11 @@ const Products = ({ match }) => {
                           placement: "top",
                           visible: true,
                         }}
-                        value={price}
                         onChange={(price) => setPrice(price)}
+                        value={price}
                       />
 
-                      <hr className="mt-5 text-primary" />
+                      {/* <hr className="mt-5 text-primary" />
 
                       <div className="mt-3">
                         <h4 className="mb-3">Categories</h4>
@@ -162,39 +191,12 @@ const Products = ({ match }) => {
                         </div>
                       </div>
 
-                      <hr className="my-3" />
+                      <hr className="my-3" /> */}
                     </div>
                   </div>
-                </div> */}
+                </div>
 
                 <div className="col-md-12">
-                  <div className={styles.searchContainer}>
-                    <input
-                      type="text"
-                      placeholder="Search by name"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className={styles.searchInput}
-                    />
-                    {searchQuery && (
-                      <button
-                        type="button"
-                        className={styles.clearSearchBtn}
-                        onClick={() => {
-                          setSearchQuery("");
-                        }}
-                      >
-                        <span>&times;</span>
-                      </button>
-                    )}
-                    <button
-                      type="submit"
-                      className={styles.searchBtn}
-                      onClick={handleSearchSubmit}
-                    >
-                      Search
-                    </button>
-                  </div>
                   <div className="row g-3 mx-auto my-3">
                     {products &&
                       products.map((product) => (
