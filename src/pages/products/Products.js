@@ -125,9 +125,9 @@ const Products = ({ match }) => {
         <>
           <div className={styles.products}>
             <div className="container mb-5" style={{ marginTop: "30px" }}>
-              <div className="row g-9 ">
+              <div className="row">
                 <div
-                  className={`${styles.searchContainer} col-sm-12 col-md-6 col-lg-6 mx-4`}
+                  className={`${styles.searchContainer} col-6 col-sm-12 col-md-6 col-lg-6 mx-4`}
                 >
                   <input
                     type="text"
@@ -155,7 +155,7 @@ const Products = ({ match }) => {
                     Search
                   </button>
                 </div>
-                <div className="col-sm-6 col-md-3 col-lg-3 pe-5">
+                <div className="col-6 col-sm-6 col-md-3 col-lg-3 pe-5">
                   <div className={styles.filter}>
                     {/* <p>
                       <BsFilter size={30} className="me-3" />
@@ -167,6 +167,7 @@ const Products = ({ match }) => {
                         marginTop: "70px",
                         paddingRight: "15px",
                         paddingLeft: "15px",
+                        minWidth: "200px",
                       }}
                     >
                       <Range
@@ -213,7 +214,7 @@ const Products = ({ match }) => {
                 </div>
 
                 <div className="col-md-12">
-                  <div className="row g-3 mx-auto my-3">
+                  <div className="row gy-3 mx-auto my-3">
                     {products &&
                       products.map((product) => (
                         <Product key={product._id} product={product} />
