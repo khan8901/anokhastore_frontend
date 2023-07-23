@@ -25,7 +25,7 @@ const Products = ({ match }) => {
   const [loading, setLoading] = useState(true);
 
   const [name, setName] = useState("");
-  const [categories, setCategories] = useState("Laptops");
+  const [categories, setCategories] = useState("");
   const [price, setPrice] = useState([1, 1000]);
   const [minPrice, setminPrice] = useState(0);
   const [maxPrice, setmaxPrice] = useState(1000);
@@ -105,7 +105,9 @@ const Products = ({ match }) => {
               onClick={() => {
                 cat === "All" ? setCategories("") : setCategories(cat);
               }}
-              className={styles.catItem}
+              className={
+                cat === categories ? styles.activeCatItem : styles.catItem
+              }
               key={index}
             >
               {cat}
@@ -155,7 +157,7 @@ const Products = ({ match }) => {
                     Search
                   </button>
                 </div>
-                <div className="col-6 col-sm-6 col-md-3 col-lg-3 pe-5">
+                <div className="col-6 col-sm-6 col-md-3 col-lg-3 pe-5 mx-4">
                   <div className={styles.filter}>
                     {/* <p>
                       <BsFilter size={30} className="me-3" />
@@ -215,10 +217,13 @@ const Products = ({ match }) => {
 
                 <div className="col-md-12">
                   <div className="row gy-3 mx-auto my-3">
-                    {products &&
+                    {products && products.length > 0 ? (
                       products.map((product) => (
                         <Product key={product._id} product={product} />
-                      ))}
+                      ))
+                    ) : (
+                      <h2>No Available Products</h2>
+                    )}
                   </div>
                 </div>
               </div>
