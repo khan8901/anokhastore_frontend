@@ -90,9 +90,11 @@
 .searchContainer {
   display: flex;
   align-items: center;
+  justify-content: right;
   margin-top: 20px;
 
   .searchInput {
+    justify-content: flex-start;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px 0 0 4px;

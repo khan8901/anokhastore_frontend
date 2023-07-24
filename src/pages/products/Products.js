@@ -132,7 +132,7 @@ const Products = ({ match }) => {
             <div className="container mb-5" style={{ marginTop: "30px" }}>
               <div className="row no-gutters">
                 <div
-                  className={`${styles.searchContainer} col-10 col-sm-8 col-md-6 col-lg-3 mx-auto`}
+                  className={`${styles.searchContainer} col-8 col-sm-8 col-md-5 col-lg-3 mx-auto`}
                 >
                   <input
                     type="text"
@@ -161,7 +161,7 @@ const Products = ({ match }) => {
                   </button>
                 </div>
                 <div
-                  className={`col-8 col-sm-8 col-md-3 col-lg-3 pe-5 mx-auto ${styles.priceFilter}`}
+                  className={`col-8 col-sm-8 col-md-4 col-lg-3 pe-5 mx-auto ${styles.priceFilter}`}
                 >
                   <div className={styles.filter}>
                     <div
