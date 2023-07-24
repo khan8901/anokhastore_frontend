@@ -2,16 +2,12 @@ import React, { Fragment, useState, useEffect, useRef } from "react";
 import { useAlert } from "react-alert";
 import Product from "./Product";
 import { Spinner } from "react-bootstrap";
-import { BsFilter } from "react-icons/bs";
 
 import styles from "./Products.module.scss";
-import Pagination from "react-js-pagination";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import Navbar from "../../components/header/Navbar";
 import Footer from "../../components/footer/Footer";
 import MetaData from "../../components/MetaData";
-//import products from "../../db/productsDB";
 import axios from "axios";
 import { baseUrl } from "../../config";
 import Banner from "../../components/banner/Banner";
@@ -70,6 +66,13 @@ const Products = ({ match }) => {
       throw new Error("Failed to fetch products");
     }
   };
+  const clearSearch = () => {
+    console.log("clearSearch is called.");
+    setSearchQuery("");
+    setName("");
+    setLimit(10);
+    getProducts();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,9 +130,9 @@ const Products = ({ match }) => {
         <>
           <div className={styles.products}>
             <div className="container mb-5" style={{ marginTop: "30px" }}>
-              <div className="row">
+              <div className="row no-gutters">
                 <div
-                  className={`${styles.searchContainer} col-6 col-sm-12 col-md-6 col-lg-6 mx-4`}
+                  className={`${styles.searchContainer} col-10 col-sm-8 col-md-6 col-lg-3 mx-auto`}
                 >
                   <input
                     type="text"
@@ -138,17 +141,17 @@ const Products = ({ match }) => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className={styles.searchInput}
                   />
-                  {searchQuery && (
+                  {/* {searchQuery && (
                     <button
                       type="button"
                       className={styles.clearSearchBtn}
                       onClick={() => {
-                        setSearchQuery("");
+                        clearSearch();
                       }}
                     >
                       <span>&times;</span>
                     </button>
-                  )}
+                  )} */}
                   <button
                     type="submit"
                     className={styles.searchBtn}
@@ -157,13 +160,10 @@ const Products = ({ match }) => {
                     Search
                   </button>
                 </div>
-                <div className="col-6 col-sm-6 col-md-3 col-lg-3 pe-5 mx-4">
+                <div
+                  className={`col-8 col-sm-8 col-md-3 col-lg-3 pe-5 mx-auto ${styles.priceFilter}`}
+                >
                   <div className={styles.filter}>
-                    {/* <p>
-                      <BsFilter size={30} className="me-3" />
-                      Filter
-                    </p> */}
-
                     <div
                       style={{
                         marginTop: "70px",
@@ -174,13 +174,13 @@ const Products = ({ match }) => {
                     >
                       <Range
                         marks={{
-                          1: `$1`,
-                          1000: `$1000`,
+                          1: `£1`,
+                          1000: `£1000`,
                         }}
                         min={1}
                         max={1000}
                         defaultValue={[1, 1000]}
-                        tipFormatter={(value) => `$${value}`}
+                        tipFormatter={(value) => `£${value}`}
                         tipProps={{
                           placement: "top",
                           visible: true,
@@ -216,6 +216,17 @@ const Products = ({ match }) => {
                 </div>
 
                 <div className="col-md-12">
+                  {name !== "" && (
+                    <button
+                      type="button"
+                      className={styles.clearSearchBtn}
+                      onClick={() => {
+                        clearSearch();
+                      }}
+                    >
+                      <span>&times;</span>
+                    </button>
+                  )}
                   <div className="row gy-3 mx-auto my-3">
                     {products && products.length > 0 ? (
                       products.map((product) => (
