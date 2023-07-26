@@ -16,16 +16,13 @@ const UpdateProduct = () => {
   const [product, setProduct] = useState({});
 
   const categories = [
-    "Eid Collection",
-    "New Collection",
-    "Featured",
-    "Footwear",
+    "Electronics",
+    "Cameras",
+    "Laptops",
     "Accessories",
-    "Clothing",
-    "Beauty/Health",
+    "Headphones",
     "Sports",
     "Outdoor",
-    "Other",
   ];
   const types = ["Men", "Women", "Kids"];
 

@@ -1,56 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
-import { useDispatch, useSelector } from "react-redux";
-// import {
-//     clearErrors,
-//     getUserDetails,
-//     updateUser,
-// } from "../../../../actions/userActions";
+import axios from "axios";
+import { baseUrl } from "../../../../config";
 import Navbar from "../../../../components/admin/navbar/Navbar";
 import Sidebar from "../../../../components/admin/sidebar/Sidebar";
 import MetaData from "../../../../components/MetaData";
-import { UPDATE_USER_RESET } from "../../../../constants/userConstants";
 
 import styles from "./UserDetails.module.scss";
+import { UserContext } from "../../../../context/UserContext";
 
 const UserDetails = ({ history, match }) => {
+  const { user, token } = useContext(UserContext);
+  const [userDetails, setUserDetails] = useState({});
   const [show, setShow] = useState(false);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
+  const [name, setName] = useState(userDetails.name);
+  const [email, setEmail] = useState(userDetails?.email);
+  const [role, setRole] = useState(userDetails?.isAdmin ? "Admin" : "User");
 
   const alert = useAlert();
-  const dispatch = useDispatch();
-
-  const { error, isUpdated } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => state.userDetails);
+  const error = false;
   const userId = match.params.id;
-
-  useEffect(() => {
-    if (user && user._id !== userId) {
-      // dispatch(getUserDetails(userId));
-    } else {
-      setName(user.name);
-      setEmail(user.email);
-      setRole(user.role);
-    }
-
-    if (error) {
-      alert.error(error);
-      // dispatch(clearErrors());
-    }
-
-    if (isUpdated) {
-      alert.success("User updated successfully");
-      dispatch({
-        type: UPDATE_USER_RESET,
+  const getUserDetail = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${baseUrl}/admin/user/${userId}`, {
+        headers: headers,
+        user: user,
       });
-
-      history.push(`/admin/user/details/${user._id}`);
-      setShow(false);
+      console.log(response, "This is response");
+      const data = response.data.user;
+      console.log(data, "This is the response.data.users");
+      setUserDetails(data);
+    } catch (error) {
+      // Handle the error
+      console.log(error);
     }
-  }, [dispatch, alert, error, history, isUpdated, userId, user]);
+  };
+
+  // useEffect(() => {
+  //   if (user && user._id !== userId) {
+  //     // dispatch(getUserDetails(userId));
+  //   } else {
+  //     setName(user.name);
+  //     setEmail(user.email);
+  //     setRole(user.role);
+  //   }
+
+  //   if (error) {
+  //     alert.error(error);
+  //     // dispatch(clearErrors());
+  //   }
+  // }, [alert, error, history, userId, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -59,9 +62,13 @@ const UserDetails = ({ history, match }) => {
     formData.set("name", name);
     formData.set("email", email);
     formData.set("role", role);
-
-    // dispatch(updateUser(user._id, formData));
   };
+  useEffect(() => {
+    getUserDetail();
+    if (error) {
+      alert.error(error);
+    }
+  }, []);
   return (
     <div className={styles.user_details}>
       <MetaData title={"User Details"} />
@@ -70,10 +77,10 @@ const UserDetails = ({ history, match }) => {
           <Sidebar />
         </div>
         <div className="col-md-10">
-          <Navbar />
+          {/* <Navbar /> */}
           <div className="container mt-3 p-3">
             <div className="row g-3">
-              <div className="col-md-6">
+              <div className="col-md-10">
                 <div className={styles.user_information}>
                   <div className="d-flex align-items-center justify-content-between ps-3 pt-3 pe-3">
                     <h4>User Informations</h4>
@@ -85,7 +92,7 @@ const UserDetails = ({ history, match }) => {
                   </div>
                   <hr />
                   <div className="row g-3">
-                    <div className="col-md-6 p-3">
+                    {/* <div className="col-md-6 p-3">
                       <div className="text-center">
                         {user && (
                           <img
@@ -99,35 +106,26 @@ const UserDetails = ({ history, match }) => {
                           />
                         )}
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="col-md-6">
+                    <div className="col-md-12 m-4">
                       <p>
                         <strong>Name :</strong>
-                        <span className="ms-3">{user?.name}</span>
+                        <span className="ms-3">{userDetails?.name}</span>
                       </p>
                       <p>
                         <strong>Email :</strong>
-                        <span className="ms-3">{user?.email}</span>
-                      </p>
-                      <p>
-                        <strong>Phone :</strong>
-                        <span className="ms-3">{user?.phone}</span>
-                      </p>
-                      <p>
-                        <strong>Address :</strong>
-                        <span className="ms-3">{user?.address}</span>
+                        <span className="ms-3">{userDetails?.email}</span>
                       </p>
                       <p>
                         <strong>Role :</strong>
-                        <span className="ms-3">{user?.role}</span>
+                        <span className="ms-3">
+                          {userDetails?.isAdmin ? "Admin" : "User"}
+                        </span>
                       </p>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-md-6">
-                <h4 className="text-center">Chart</h4>
               </div>
             </div>
           </div>

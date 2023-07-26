@@ -110,8 +110,8 @@ function App() {
             exact
           />
           <Route path="/users" isAdmin={true} component={Users} exact />
-          <ProtectedRoute
-            path="/admin/user/details/:id"
+          <Route
+            path="/adm/user/details/:id"
             isAdmin={true}
             component={UserDetails}
             exact

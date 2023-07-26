@@ -33,13 +33,8 @@ const NewProduct = ({ history }) => {
     "Laptops",
     "Accessories",
     "Headphones",
-    "Food",
-    "Books",
-    "Clothes/Shoes",
-    "Beauty/Health",
     "Sports",
     "Outdoor",
-    "Home",
   ];
 
   const uploadProduct = async (e) => {
