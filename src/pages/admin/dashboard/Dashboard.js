@@ -6,19 +6,13 @@ import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styles from "./Dashboard.module.scss";
 import Loader from "../../../components/loader/Loader";
-import users from "../../../db/usersDB";
 import MetaData from "../../../components/MetaData";
-import orders from "../../../db/ordersDB";
-import products from "../../../db/productsDB";
 
 const Dashboard = () => {
   const loading = false;
 
-  let stockout = products?.filter((item) => item.stock === 0);
-
   const user = {
     title: "USERS",
-    total: users?.length,
     link: (
       <Link style={{ textDecoration: "none" }} to={"/users"}>
         See all user
@@ -28,7 +22,6 @@ const Dashboard = () => {
   };
   const order = {
     title: "ORDERS",
-    total: orders?.length,
     link: (
       <Link style={{ textDecoration: "none" }} to={"/admin-orders"}>
         See all orders
@@ -38,7 +31,6 @@ const Dashboard = () => {
   };
   const product = {
     title: "PRODUCTS",
-    total: products?.length,
     link: (
       <Link style={{ textDecoration: "none" }} to={"/admin-products"}>
         See all products
@@ -48,7 +40,6 @@ const Dashboard = () => {
   };
   const stock = {
     title: "STOCK OUT",
-    total: stockout.length,
     link: (
       <Link style={{ textDecoration: "none" }} to={"/users"}>
         See all user
@@ -73,29 +64,16 @@ const Dashboard = () => {
           ) : (
             <>
               <div className={styles.widgets}>
-                <Widget
-                  title={user.title}
-                  icon={user.icon}
-                  link={user.link}
-                  total={user.total}
-                />
+                <Widget title={user.title} icon={user.icon} link={user.link} />
                 <Widget
                   title={order.title}
                   icon={order.icon}
                   link={order.link}
-                  total={order.total}
                 />
                 <Widget
                   title={product.title}
                   icon={product.icon}
                   link={product.link}
-                  total={product.total}
-                />
-                <Widget
-                  title={stock.title}
-                  icon={stock.icon}
-                  link={stock.link}
-                  total={stock.total}
                 />
               </div>
             </>
