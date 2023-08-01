@@ -90,7 +90,7 @@
 .searchContainer {
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: center;
   margin-top: 20px;
 
   .searchInput {
@@ -230,6 +230,9 @@
     .clearSearchBtn {
       right: -280px;
       bottom: -10px;
+    }
+    .searchInput {
+      width: 140px;
     }
     .product {
       margin: 10px auto;
