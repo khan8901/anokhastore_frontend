@@ -22,10 +22,10 @@ import products from "../../../db/productsDB";
 const ProductsList = ({ history }) => {
   const { user, token } = useContext(UserContext);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const alert = useAlert();
 
-  const loading = false;
   const error = false;
   const isDeleted = false;
   useEffect(() => {
@@ -48,6 +48,7 @@ const ProductsList = ({ history }) => {
       const data = response.data.products;
       console.log(data, "This is the response.data");
       setProducts(data);
+      setLoading(false);
     } catch (error) {
       // Handle the error
       console.log(error);

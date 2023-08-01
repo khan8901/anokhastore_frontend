@@ -48,6 +48,7 @@ const Products = ({ match }) => {
 
   const getProducts = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${baseUrl}/products`, {
         params: {
           name,
@@ -107,6 +108,7 @@ const Products = ({ match }) => {
             <li
               onClick={() => {
                 cat === "All" ? setCategories("") : setCategories(cat);
+                setLimit(10);
               }}
               className={
                 cat === categories ? styles.activeCatItem : styles.catItem

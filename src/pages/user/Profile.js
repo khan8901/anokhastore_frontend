@@ -63,20 +63,6 @@ const Profile = () => {
                             </tr>
                             <tr>
                               <td>
-                                <BsPhone size={25} />
-                              </td>
-                              <td className="fw-bold">Phone</td>
-                              <td>{user?.phone}</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <GrLocation size={25} />
-                              </td>
-                              <td className="fw-bold">Address</td>
-                              <td>{user?.address}</td>
-                            </tr>
-                            <tr>
-                              <td>
                                 <BsEmojiSmile size={25} />
                               </td>
                               <td className="fw-bold">Role</td>

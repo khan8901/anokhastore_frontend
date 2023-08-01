@@ -40,28 +40,36 @@ const UserDetails = ({ history, match }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (user && user._id !== userId) {
-  //     // dispatch(getUserDetails(userId));
-  //   } else {
-  //     setName(user.name);
-  //     setEmail(user.email);
-  //     setRole(user.role);
-  //   }
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
 
-  //   if (error) {
-  //     alert.error(error);
-  //     // dispatch(clearErrors());
-  //   }
-  // }, [alert, error, history, userId, user]);
-
-  const submitHandler = (e) => {
+  //   const formData = new FormData();
+  //   formData.set("name", name);
+  //   formData.set("email", email);
+  //   formData.set("role", role);
+  // };
+  const updateHandler = async (e, id) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("email", email);
-    formData.set("role", role);
+    const data = { userId: id, role: role };
+    console.log(data, "This is the data.");
+    try {
+      console.log(token, "This is the token");
+      const response = await axios.put(`${baseUrl}/admin/user/${id}`, {
+        body: {
+          name: name,
+          email: email,
+          role: role,
+        },
+      });
+      console.log(response, "This is response");
+      // const data = response.data.user;
+      // console.log(data, "This is the response.data.users");
+      // setUserDetails(data);
+      getUserDetail();
+    } catch (error) {
+      // Handle the error
+      console.log(error);
+    }
   };
   useEffect(() => {
     getUserDetail();
@@ -69,6 +77,11 @@ const UserDetails = ({ history, match }) => {
       alert.error(error);
     }
   }, []);
+  useEffect(() => {
+    setName(userDetails.name);
+    setEmail(userDetails.email);
+    setRole(userDetails.role ? "Admin" : "User");
+  }, [userDetails]);
   return (
     <div className={styles.user_details}>
       <MetaData title={"User Details"} />
@@ -138,7 +151,9 @@ const UserDetails = ({ history, match }) => {
           <div className={styles.modal}>
             <h4 className="text-center">Update User Information</h4>
 
-            <form onSubmit={submitHandler}>
+            <form
+            //  onSubmit={submitHandler}
+            >
               <div className={styles.from_group}>
                 <label htmlFor="name_field">Name</label>
                 <input
@@ -176,7 +191,12 @@ const UserDetails = ({ history, match }) => {
               </div>
 
               <div className={styles.from_group}>
-                <button type="submit">Update</button>
+                <button
+                  type="submit"
+                  onClick={() => updateHandler(userDetails._id)}
+                >
+                  Update
+                </button>
               </div>
             </form>
           </div>

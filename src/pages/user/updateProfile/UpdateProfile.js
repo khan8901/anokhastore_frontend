@@ -1,51 +1,38 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { useAlert } from "react-alert";
-import { AiOutlineCloudUpload } from "react-icons/ai";
-// import {
-//     clearErrors,
-//     loadUser,
-//     updateProfile,
-// } from "../../../actions/userActions";
+import React, { Fragment, useContext, useState } from "react";
+import styles from "./UpdateProfile.module.scss";
 import Footer from "../../../components/footer/Footer";
 import Navbar from "../../../components/header/Navbar";
 import ButtonLoader from "../../../components/loader/ButtonLoader";
 import MetaData from "../../../components/MetaData";
 import ProfileLink from "../../../components/profileLinks/ProfileLink";
-import { UPDATE_PROFILE_RESET } from "../../../constants/userConstants";
-import styles from "./UpdateProfile.module.scss";
+import axios from "axios";
+import { baseUrl } from "../../../config";
 import { UserContext } from "../../../context/UserContext";
 
 const UpdateProfile = ({ history }) => {
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
   console.log(user, "This is the user");
-  const [name, setName] = useState(user.name);
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(
-    "https://res.cloudinary.com/mehedi08h/image/upload/v1647280872/react-final/auth/logo_wyrs86.png"
-  );
+  const [name, setName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
 
-  const alert = useAlert();
-  // const user = {
-  //   name: "Ahmad",
-  //   email: "ahmad@gmail.com",
-  //   phone: "03120073542",
-  //   address: "house No 1",
-  //   role: "admin",
-  // };
   const loading = false;
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("address", address);
-    formData.set("phone", phone);
-    formData.set("avatar", avatar);
-    console.log(formData);
-    // dispatch(updateProfile(formData));
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const data = { name: name, email: email };
+      const response = await axios.put(`${baseUrl}/me/update`, {
+        headers: headers,
+        data,
+      });
+      console.log(response, "This is response");
+    } catch (error) {
+      // Handle the error
+      console.log(error);
+    }
   };
 
   return (
@@ -61,11 +48,7 @@ const UpdateProfile = ({ history }) => {
             <div className={styles.form_container}>
               <h4 className="text-center mt-3">
                 Update Profile
-                <form
-                  className={styles.form}
-                  onSubmit={submitHandler}
-                  encType="multipart/form-data"
-                >
+                <form className={styles.form} encType="multipart/form-data">
                   <div className={styles.from_group}>
                     <label htmlFor="email_field">Name</label>
                     <input
@@ -77,28 +60,20 @@ const UpdateProfile = ({ history }) => {
                     />
                   </div>
                   <div className={styles.from_group}>
-                    <label htmlFor="email_field">Address</label>
+                    <label htmlFor="email_field">Email: </label>
                     <input
                       className="from_input"
-                      name="address"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      type="text"
-                    />
-                  </div>
-                  <div className={styles.from_group}>
-                    <label htmlFor="email_field">Phone</label>
-                    <input
-                      className="from_input"
-                      name="phone"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      type="number"
+                      name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      type="email"
                     />
                   </div>
 
                   <div className={styles.from_group}>
-                    <button>{loading ? <ButtonLoader /> : "Update"}</button>
+                    <button type="submit" onClick={submitHandler}>
+                      {loading ? <ButtonLoader /> : "Update"}
+                    </button>
                   </div>
                 </form>
               </h4>
